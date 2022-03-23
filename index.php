@@ -3,9 +3,12 @@
 $title = "Product List";
 require './libraries/Button.php';
 $buttons = array();
-$buttons[] = new Button("ADD", "add", "");
-$buttons[] = new Button("MASS DELETE", "delete", "delete-product-btn");
-$form_id = "";
+$form_id = "list_form";
+$buttons[] = new Button("ADD", "add", "", $form_id, "submit");
+$button_id = "delete-product-btn";
+$button_onclick = "window.location.href='addProduct.php'";
+$buttons[] = new Button("MASS DELETE", "delete", $button_id, $form_id, "submit");
+
 require_once './header.php';
 
 // session_start();

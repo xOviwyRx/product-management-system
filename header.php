@@ -21,9 +21,14 @@ require './libraries/Furniture.php';
     </head>
     <body>
         <div class="container-fluid pt-5 pl-3">
-        <form method = "post" action="" id = '"<?php echo $form_id?>"'>
-        <div class="d-flex justify-content-between">
-            <p class="h2 font-weight-bold"><?php echo $title ?></p>
+            <div class="d-flex justify-content-between">
+                <p class="h2 font-weight-bold"><?php echo $title ?></p>
+                <?php foreach ($buttons as $button){ echo $button->showButton();}
+                   ?>
+            </div>
+            <form method = "post" action="" id = "<?php echo $form_id?>">
+        
+            
             
             
                 <!--<button onclick="window.location.href='addProduct.php'">ADD</button>-->
@@ -31,11 +36,6 @@ require './libraries/Furniture.php';
     <!--        <form method="POST">
                 <input type="submit" value="ADD" onclick="document.location='addProduct.php'"/>
                 <input type="submit" value="MASS DELETE" id="delete-product-btn"/>
-            </form>-->
-            <div>
-               <?php foreach ($buttons as $button){ echo $button->showButton();}
-               ?>
-            </div>
-        </div>   
+            </form>-->  
          <hr>
 

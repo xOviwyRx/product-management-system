@@ -2,9 +2,9 @@
 $title = "Product Add";
 require './libraries/Button.php';
 $buttons = array();
-$buttons[] = new Button("Save", "save", "");
-$buttons[] = new Button("Cancel", "cancel", "");
 $form_id = "product_form";
+$buttons[] = new Button("Save", "save", "", $form_id, "submit");
+$buttons[] = new Button("Cancel", "cancel", "", $form_id, "button");
 require_once './header.php';
 ?>
     
@@ -51,6 +51,7 @@ require_once './header.php';
                 </div>
             </div>
         </form>
+        <button type="button">Some button</button>
         <?php
         include "./footer.html";
         $typeswitcher = filter_input(INPUT_POST, 'typeswitcher');
