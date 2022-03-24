@@ -29,8 +29,8 @@ class Button {
     public function showButton():string{
         $string = "<button type='".$this->type."' class='p-1' "
                 . "form='".$this->form_id."' name='".$this->name. "' "
-                . "value='".$this->value."' id = '".$this->id.""
-                . "onclick='".$this->on_click."'>"
+                . "value='".$this->value."' id = ".$this->id." "
+                . " onclick='".$this->on_click."'>"
                 . "".$this->value."</button>";
         return $string;
     }

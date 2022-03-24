@@ -21,21 +21,21 @@ require './libraries/Furniture.php';
     </head>
     <body>
         <div class="container-fluid pt-5 pl-3">
-            <div class="d-flex justify-content-between">
-                <p class="h2 font-weight-bold"><?php echo $title ?></p>
-                <?php foreach ($buttons as $button){ echo $button->showButton();}
+            <div class="d-flex">
+                <p class="h1 font-weight-bold"><?php echo $title ?></p>
+              <?php // foreach ($buttons as $button){ echo $button->showButton();}
                    ?>
-            </div>
+            <!--  </div>
             <form method = "post" action="" id = "<?php echo $form_id?>">
                 
 
             
             
-                <!--<button onclick="window.location.href='addProduct.php'">ADD</button>-->
+                <button onclick="window.location.href='addProduct.php'">ADD</button>
 
-    <!--        <form method="POST">
+            <form method="POST">
                 <input type="submit" value="ADD" onclick="document.location='addProduct.php'"/>
                 <input type="submit" value="MASS DELETE" id="delete-product-btn"/>
-            </form>-->  
-         <hr>
+            </form>  
+         <hr>-->
 

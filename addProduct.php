@@ -1,14 +1,14 @@
 <?php
 $title = "Product Add";
 require './libraries/Button.php';
-$buttons = array();
 $form_id = "product_form";
-$buttons[] = new Button("Save", "save", "", $form_id, "submit", "");
-$button_onclick = "window.location.href='index.php'";
-$buttons[] = new Button("Cancel", "cancel", "", $form_id, "button", $button_onclick);
 require_once './header.php';
 ?>
-    
+                    <button form = "product_form" type="submit" name="save">Save</button>
+                    <button onclick="window.location.href='index.php'">Cancel</button>
+                </div>
+                <form method = "post" action="" id = "product_form">
+            <hr>
             <div>
                 <div>
                     <label for="sku">SKU:</label>
@@ -65,9 +65,6 @@ require_once './header.php';
             $product = new $typeswitcher($name, $sku, $price);
             $product->setSpecificAttributes(filter_input_array(INPUT_POST));
             $product->addProductToDB();
-        }
-        elseif (isset($_POST['cancel'])){
-            header("Location: index.php");
         }
         ?>
           

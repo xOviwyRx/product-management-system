@@ -4,16 +4,15 @@ $title = "Product List";
 require './libraries/Button.php';
 $buttons = array();
 $form_id = "list_form";
-$button_onclick = "window.location.href='addProduct.php'";
-$buttons[] = new Button("ADD", "add", "", $form_id, "button", $button_onclick);
-$button_id = "delete-product-btn";
-$buttons[] = new Button("MASS DELETE", "delete", $button_id, $form_id, "submit", "");
 
 require_once './header.php';
 
 // session_start();
 ?>
-    
+                  <button onclick="window.location.href='addProduct.php'">ADD</button>
+                  <button form = "list_form" type="submit" name="delete" id="delete-product-btn">MASS DELETE</button>
+            </div>
+            <form method = "post" action="" id = "list_form">
 
             <?php
             //*Filling array products from the database*//
@@ -73,9 +72,6 @@ require_once './header.php';
                     }
                     header("Location: index.php?msg=".urlencode('Record(s) Deleted'));
                 }
-            }
-            elseif (isset($_POST['add'])){
-                header("Location: addProduct.php");
             }
             include "./footer.html";
             ?>
