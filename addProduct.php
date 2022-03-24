@@ -3,8 +3,9 @@ $title = "Product Add";
 require './libraries/Button.php';
 $buttons = array();
 $form_id = "product_form";
-$buttons[] = new Button("Save", "save", "", $form_id, "submit");
-$buttons[] = new Button("Cancel", "cancel", "", $form_id, "button");
+$buttons[] = new Button("Save", "save", "", $form_id, "submit", "");
+$button_onclick = "window.location.href='index.php'";
+$buttons[] = new Button("Cancel", "cancel", "", $form_id, "button", $button_onclick);
 require_once './header.php';
 ?>
     

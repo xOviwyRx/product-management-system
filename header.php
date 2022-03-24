@@ -27,8 +27,8 @@ require './libraries/Furniture.php';
                    ?>
             </div>
             <form method = "post" action="" id = "<?php echo $form_id?>">
-        
-            
+                
+
             
             
                 <!--<button onclick="window.location.href='addProduct.php'">ADD</button>-->

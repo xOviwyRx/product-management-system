@@ -18,12 +18,13 @@ class Button {
     private string $type;
     private string $on_click;
     public function __construct(string $value, string $name, 
-            string $id, string $form_id, string $type) {
+            string $id, string $form_id, string $type, $on_click) {
         $this->value = $value;
         $this->name = $name;
         $this->id = $id;
         $this->form_id = $form_id;
         $this->type = $type;
+        $this->on_click = $on_click;
     }
     public function showButton():string{
         $string = "<button type='".$this->type."' class='p-1' "

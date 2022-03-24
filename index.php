@@ -4,10 +4,10 @@ $title = "Product List";
 require './libraries/Button.php';
 $buttons = array();
 $form_id = "list_form";
-$buttons[] = new Button("ADD", "add", "", $form_id, "submit");
-$button_id = "delete-product-btn";
 $button_onclick = "window.location.href='addProduct.php'";
-$buttons[] = new Button("MASS DELETE", "delete", $button_id, $form_id, "submit");
+$buttons[] = new Button("ADD", "add", "", $form_id, "button", $button_onclick);
+$button_id = "delete-product-btn";
+$buttons[] = new Button("MASS DELETE", "delete", $button_id, $form_id, "submit", "");
 
 require_once './header.php';
 
