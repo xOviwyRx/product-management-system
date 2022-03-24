@@ -4,55 +4,79 @@ require './libraries/Button.php';
 $form_id = "product_form";
 require_once './header.php';
 ?>
+            
                     <button form = "product_form" type="submit" name="save">Save</button>
                     <button onclick="window.location.href='index.php'">Cancel</button>
                 </div>
-                <form method = "post" action="" id = "product_form">
-            <hr>
-            <div>
-                <div>
-                    <label for="sku">SKU:</label>
-                    <input name="sku" id="#sku"/>
-                </div>
-                <div>
-                    <label for="name">Name:</label>
-                    <input name="name" id="#name"/>
-                </div>
-                <div>
-                    <label for="price">Price</label>
-                    <input name="price" id="#price"/>
-                </div>
-                <div>
-                    <label for="typeswitcher">Type Switcher</label>
-                    <select name = "typeswitcher" id="#productType">
-                        <option value = "DVD" selected>DVD</option>
-                        <option value = "Book">Book</option>
-                        <option value = "Furniture">Furniture</option>
-                    </select>
-                </div>
-                <div>
-                    <label for="size">Size:</label>
-                    <input name="size" id="#size"/>
-                </div>
-                <div>
-                    <label for="weight">Weight</label>
-                    <input name="weight" id="#weight">
-                </div>
-                <div>
-                    <label for="height">Height</label>
-                    <input name="height" id ="#height">
-                </div>
-                <div>
-                    <label for="width">Width</label>
-                    <input name="width" id ="#width">
-                </div>
-                <div>
-                    <label for="length">Length</label>
-                    <input name="length" id ="#length">
-                </div>
+                
             </div>
+            <hr>
+            <form style="width:500px" method = "post" action="" id = "product_form">
+                <div class="row mb-3">
+                    <label class="col-form-label col-sm-3" for="#sku">SKU</label>
+                    <div class="col-sm-9">
+                        <input class="form-control" name="sku" id="#sku" required
+                          oninvalid="this.setCustomValidity('Please, submit required data')"
+                            oninput="this.setCustomValidity('')"/>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label class="col-form-label col-sm-3" for="#name">Name</label>
+                    <div class="col-sm-9">
+                        <input name="name" class="form-control" id="#name" required
+                            oninvalid="this.setCustomValidity('Please, submit required data')"
+                            oninput="this.setCustomValidity('')"/>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label class="col-form-label col-sm-3" for="#price">Price ($)</label>
+                    <div class="col-sm-9">
+                        <input name="price" class="form-control" id="#price" required
+                            oninvalid="this.setCustomValidity('Please, submit required data')"
+                            oninput="this.setCustomValidity('')"/>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label class="col-form-label col-sm-3" for="typeswitcher">Type Switcher</label>
+                    <div class="col-sm-3">
+                        <select class="form-control" name = "typeswitcher" id="#productType">
+                            <option value = "DVD" selected>DVD</option>
+                            <option value = "Book">Book</option>
+                            <option value = "Furniture">Furniture</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label class="col-form-label col-sm-3" for="size">Size (MB)</label>
+                    <div class="col-sm-9">
+                        <input class="form-control" name="size" id="#size"/>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label class="col-form-label col-sm-3" for="weight">Weight (KG)</label>
+                    <div class="col-sm-9">    
+                        <input class="form-control" name="weight" id="#weight">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label class="col-form-label col-sm-3" for="height">Height (CM)</label>
+                    <div class="col-sm-9">
+                        <input class="form-control" name="height" id ="#height">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label class="col-form-label col-sm-3" for="width">Width (CM)</label>
+                    <div class="col-sm-9">
+                        <input class="form-control" name="width" id ="#width">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label class="col-form-label col-sm-3" for="length">Length (CM)</label>
+                    <div class="col-sm-9">
+                        <input class="form-control" name="length" id ="#length">
+                    </div>
+                </div>
         </form>
-        <button type="button">Some button</button>
         <?php
         include "./footer.html";
         $typeswitcher = filter_input(INPUT_POST, 'typeswitcher');
@@ -67,6 +91,6 @@ require_once './header.php';
             $product->addProductToDB();
         }
         ?>
-          
+       </div>   
     </body>
 </html>

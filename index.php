@@ -11,9 +11,10 @@ require_once './header.php';
 ?>
                   <button onclick="window.location.href='addProduct.php'">ADD</button>
                   <button form = "list_form" type="submit" name="delete" id="delete-product-btn">MASS DELETE</button>
+                </div>
             </div>
+            <hr>
             <form method = "post" action="" id = "list_form">
-
             <?php
             //*Filling array products from the database*//
 
