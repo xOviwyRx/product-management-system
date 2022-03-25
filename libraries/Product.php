@@ -117,6 +117,9 @@ abstract class Product {
 
 
     abstract public function addProductToDB();
+    public function showProduct(){
+        
+    }
 //    abstract public function setAdditionalProperties();
 //    abstract public function insertRecord(): void;
 //    abstract public function getQuery(): string;

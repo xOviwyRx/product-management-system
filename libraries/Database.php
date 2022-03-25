@@ -34,8 +34,8 @@ class Database{
         $insert_row = $this->link->query($query) or die($this->link->error.__LINE__);
         
         if ($insert_row){
-            header("Location: index.php?msg=".urlencode('Record Added'));
-            exit();
+//            header("Location: index.php");
+//            exit();
         } else{
             die('Error : ('. $this->link->errno .') '. $this->link->error);
         }

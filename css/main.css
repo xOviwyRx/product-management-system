@@ -1,4 +1,29 @@
 body{
     font-family: cursive;
+    font-weight: bold;
+}
+.border-dark{
+    border-width: 3px !important;
+}
+hr{
+    height: 2px;
+    background: black;
 }
 
+.btn, .btn:hover, .btn:active, .btn:link, .btn:visited{
+    border-width: 3px !important;
+    border-color: black !important;
+    box-shadow: 3px 3px black !important;
+    /*height: 40px;*/
+}
+
+#product_form input, select{
+    border-width: 3px !important;
+    border-color: black !important;
+}
+.select_box{
+    font-weight: bold !important;
+}
+#noFurniture,#noBook {
+  display:none;
+}

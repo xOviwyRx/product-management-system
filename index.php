@@ -9,12 +9,14 @@ require_once './header.php';
 
 // session_start();
 ?>
-                  <button onclick="window.location.href='addProduct.php'">ADD</button>
-                  <button form = "list_form" type="submit" name="delete" id="delete-product-btn">MASS DELETE</button>
+                  <button class="mr-4 btn btn-outline-dark" onclick="window.location.href='addProduct.php'" class="mr-4">ADD</button>
+                  <button class="mr-4 btn btn-outline-dark" form = "list_form" type="submit" name="delete" id="delete-product-btn" class="mr-3">MASS DELETE</button>
                 </div>
             </div>
             <hr>
             <form method = "post" action="" id = "list_form">
+                <div class="container-fluid d-flex">
+                    <div class="row justify-content-around">
             <?php
             //*Filling array products from the database*//
 
@@ -30,40 +32,22 @@ require_once './header.php';
     //           $products[] = $product; 
             $products = Product::getAllProductsFromDB($db);
             $checked_records = array();
+           
             foreach ($products as $product){
                 ?>
-            <div>
-                <input name="checked_products[]" type="checkbox" class=".delete-checkbox" value="<?php echo $product->getProductId()?>"/>
-                <br/>
+                <div class="pl-4 pr-4 pt-2 pb-5 mr-5 mb-4 col-3 border border-dark">
+                    <input name="checked_products[]" type="checkbox" class=".delete-checkbox" value="<?php echo $product->getProductId()?>"/>
+                    <p class="text-center m-0"><?php print $product->getSku() ?></p>
+                    <p class="text-center m-0"><?php print $product->getName() ?></p>
+                    <p class="text-center m-0"><?php print $product->getPrice()?> $</p>
+                    <p class="text-center m-0"><?php print $product->getSpecificAttributes() ?></p>
+
+                </div>
                 <?php
-
-    //            $product = new $row['type']();
-    //            $product->setName($row['name']);
-    //            $product->setSku($row['sku']);
-    //            $product->setPrice($row['price']);
-
-
-
-                print "SKU: ".$product->getSku()."\n";
-                ?><br/>
-                <?php
-                echo "Name: ".$product->getName()."\n";
-                ?>
-                <br/>
-                <?php
-                echo "Price: ".$product->getPrice()." $\n";
-                ?>
-                <br/>
-                <?php
-                echo $product->getSpecificAttributes();
-    //            foreach ($spec_attributes as $key => $value){
-    //                echo $key.": ".$value;
-    //            }
-                }
-                ?>
-
-            </div>
-
+            }
+            ?>
+                </div>
+                </div>
             </form>
             <?php
             if (isset($_POST['delete'])){
@@ -76,6 +60,7 @@ require_once './header.php';
             }
             include "./footer.html";
             ?>
+            
     </div>
  </body>
 </html>
