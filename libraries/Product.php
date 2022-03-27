@@ -14,10 +14,10 @@ abstract class Product {
     
     protected string $sku;
     protected string $name;
-    protected float $price;
+    protected string $price;
     protected int $product_id;
     
-    public function __construct(string $name, string $sku, float $price) {
+    public function __construct(string $name, string $sku, string $price) {
         $this->name = $name;
         $this->sku = $sku;
         $this->price = $price;
@@ -34,15 +34,12 @@ abstract class Product {
     public function getProductId(): int {
         return $this->product_id;
     }
-    
-
-    
 
     public function getName(): string {
         return $this->name;
     }
 
-    public function getPrice(): float {
+    public function getPrice(): string {
         return $this->price;
     }
     
@@ -83,8 +80,7 @@ abstract class Product {
         $query = "SELECT product_id, sku, name, price,
         size, weight, width, length, height, type
         FROM Product
-        ORDER BY product_id
-        ";
+        ORDER BY product_id";
         return $query;
     }
     

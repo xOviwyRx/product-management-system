@@ -27,3 +27,9 @@ hr{
 #noFurniture,#noBook {
   display:none;
 }
+p{
+   word-wrap: break-word;
+}
+/*.footer {
+    
+}*/

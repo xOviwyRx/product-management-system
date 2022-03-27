@@ -32,3 +32,10 @@ el.addEventListener("change", function() {
     document.querySelector('#weight').required = false;
   }
 }, false); 
+
+//const div = document.querySelector('#product_div');
+//div.onclick = (e) => {
+//    
+//  const input = e.target.querySelector('input');
+//  input.checked = !input.checked;
+//};

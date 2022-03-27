@@ -11,7 +11,7 @@ require_once './header.php';
             </div>
             <hr>
             
-            <form style="width:500px" method = "post" action="" id = "product_form">
+            <form class="mt-4" style="width:500px" method = "post" action="" id = "product_form">
                 <div class="row mb-3">
                     <label class="col-form-label col-sm-3" for="sku">SKU</label>
                     <div class="col-sm-9">
@@ -31,7 +31,7 @@ require_once './header.php';
                 <div class="row mb-3">
                     <label class="col-form-label col-sm-3" for="price">Price ($)</label>
                     <div class="col-sm-9">
-                        <input pattern="\d+(,\d{2})?" name="price" class="form-control" id="price" required
+                        <input pattern="\d+(,\d{2})?" name="price" step=".01" type="number" class="form-control" id="price" required
                             oninvalid="this.setCustomValidity('Please, submit required data')"
                             oninput="this.setCustomValidity('')"/>
                     </div>
@@ -49,7 +49,7 @@ require_once './header.php';
                 <div class="row mb-3" id ="noDVD">
                     <label class="col-form-label col-sm-3" for="size">Size (MB)</label>
                     <div class="col-sm-9">
-                        <input class="form-control" name="size" id="size" required
+                        <input class="form-control" type="number" name="size" id="size" required
                             oninvalid="this.setCustomValidity('Please, submit required data')"
                             oninput="this.setCustomValidity('')">
                         <p class="mt-3">Please, provide size</p>
@@ -58,7 +58,7 @@ require_once './header.php';
                 <div class="row mb-3" id="noBook">
                     <label class="col-form-label col-sm-3" for="weight">Weight (KG)</label>
                     <div class="col-sm-9">    
-                        <input class="form-control" name="weight" id="weight"
+                        <input class="form-control" step=".01" type="number" name="weight" id="weight"
                             oninvalid="this.setCustomValidity('Please, submit required data')"
                             oninput="this.setCustomValidity('')">
                         <p class="mt-3">Please, provide weight</p>
@@ -68,7 +68,7 @@ require_once './header.php';
                     <div class="row mb-3">
                         <label class="col-form-label col-sm-3" for="height">Height (CM)</label>
                         <div class="col-sm-9">
-                            <input class="form-control" name="height" id ="height"
+                            <input class="form-control" step=".1" type="number" name="height" id ="height"
                                  oninvalid="this.setCustomValidity('Please, submit required data')"
                                  oninput="this.setCustomValidity('')">
                         
@@ -77,7 +77,7 @@ require_once './header.php';
                     <div class="row mb-3">
                         <label class="col-form-label col-sm-3" for="width">Width (CM)</label>
                         <div class="col-sm-9">
-                            <input class="form-control" name="width" id ="width"
+                            <input class="form-control" step=".1" type="number" name="width" id ="width"
                                    oninvalid="this.setCustomValidity('Please, submit required data')"
                                    oninput="this.setCustomValidity('')">
                         </div>
@@ -85,7 +85,7 @@ require_once './header.php';
                     <div class="row mb-3">
                         <label class="col-form-label col-sm-3" for="length">Length (CM)</label>
                         <div class="col-sm-9">
-                            <input class="form-control" name="length" id ="length"
+                            <input class="form-control" step=".1" type="number" name="length" id ="length"
                                    oninvalid="this.setCustomValidity('Please, submit required data')"
                                     oninput="this.setCustomValidity('')">
                             <p class="mt-3">Please, provide dimensions</p>
@@ -95,7 +95,7 @@ require_once './header.php';
                 </div>
         </form>
         <?php
-        include "./footer.html";
+        
         $typeswitcher = filter_input(INPUT_POST, 'typeswitcher');
         //$checked_products = filter_input(INPUT_POST, 'checked_products');
         //echo $checked_products[0];
@@ -108,7 +108,13 @@ require_once './header.php';
             $product->addProductToDB();
         }
         ?>
+            
+            </section>
+                <?php 
+       include "./footer.html";
+       ?>
        </div>  
+       
        <script src="js/main.js"></script>
        
        

@@ -18,6 +18,7 @@ if (!is_null($typeswitcher)){
     $product->setSpecificAttributes(filter_input_array(INPUT_POST));
     $product->addProductToDB();
 }
+
 //else{
 //    foreach ($checked_products as $value){
 //                    echo "value:".$value.'<br/>';
