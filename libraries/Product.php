@@ -22,7 +22,7 @@ abstract class Product {
         if (empty($name) || empty($sku) || empty($price)){
             throw new Exception("Please, submit requied data");
         }
-        if (!$this->validNumberField($price)){
+        if (!$this->validNumberField($price, '/^[0-9]+(\.[0-9]{1,2})?$/')){
             throw new Exception("Please, provide the data of indicated type");
         }
         
@@ -31,9 +31,8 @@ abstract class Product {
         $this->price = $price;
     }
     
-    protected function validNumberField($number) : bool {
+    protected function validNumberField($number, $pattern = '/^[0-9]+(\.[0-9]{1})?$/') : bool {
             
-        $pattern = '/^[0-9]+(\.[0-9]{1,2})?$/';
         if (preg_match($pattern, $number)){
                 return true;
             }
@@ -74,16 +73,17 @@ abstract class Product {
     abstract public function setSpecificAttributes($row): void;
     abstract public function getSpecificAttributes(): string;
     
-    protected function getQueryAllRecords(): string{
-//        $query = "SELECT Product.sku, Product.name, Product.price, Product.spec_attributes, Type.name as type,
-//                  FROM Product
-//                  INNER JOIN ProductType ON
-//                  Product.sku = ProductType.sku
-//                  INNER JOIN Type ON
-//                  ProductType.type_id = Type.type_id
-//                  ";
+    static protected function getQueryAllRecords(): string{
+        $query = "SELECT sku, Product.name, price, spec_attributes, Type.name as type, Product.product_id
+                  FROM Product
+                  INNER JOIN ProductType ON
+                  Product.product_id = ProductType.product_id
+                  INNER JOIN Type ON
+                  ProductType.type_id = Type.type_id
+                  ORDER BY Product.product_id
+                  ";
 //        $query = "SELECT Product.product_id, Product.sku, Product.name, Product.price,
-//        size, weight, weight, length, height, Type.name as type
+//        size, weight, width, length, height, Type.name as type
 //        FROM Product
 //        INNER JOIN ProductType ON
 //        Product.product_id = ProductType.product_id
@@ -91,19 +91,15 @@ abstract class Product {
 //        ProductType.type_id = Type.type_id
 //        ORDER BY Product.product_id
 //        ";
-        $query = "SELECT product_id, sku, name, price,
-        size, weight, width, length, height, type
-        FROM Product
-        ORDER BY product_id";
+//        $query = "SELECT product_id, sku, name, price,
+//        size, weight, width, length, height, type
+//        FROM Product
+//        ORDER BY product_id";
         return $query;
     }
     
     static public function getAllProductsFromDB($db): array{
-        $query = "SELECT product_id, sku, name, price,
-        size, weight, width, length, height, type
-        FROM Product
-        ORDER BY product_id
-        ";
+        $query = Product::getQueryAllRecords();
         $records = $db->select($query);
         $products = array();
         foreach ($records as $row){
@@ -111,12 +107,14 @@ abstract class Product {
            $sku = $row['sku'];
            $price = $row['price'];
            $product_id = $row['product_id'];
+           $type = $row['type'];
+           $spec_attributes = json_decode($row['spec_attributes'], true);
            
 //           try{
-            $product = new $row['type']($name, $sku, $price);
-            $product->setSpecificAttributes($row);
-            $product->setProductId($product_id);
-            $products[] = $product; 
+           $product = new $type($name, $sku, $price);
+           $product->setSpecificAttributes($spec_attributes);
+           $product->setProductId($product_id);
+           $products[] = $product; 
 //           }
 //           catch (Exception $e){
 //               echo $e;
@@ -125,9 +123,13 @@ abstract class Product {
         return $products;
     }
     static public function deleteProductById($db, $product_id){
-        $query = "DELETE FROM `Product`"
+        $query1 = "DELETE FROM `ProductType`"
                 . "WHERE product_id = ".$product_id.";";
-        $db->delete($query);
+        $db->delete($query1);
+        
+        $query2 = "DELETE FROM `Product`"
+                . "WHERE product_id = ".$product_id.";";
+        $db->delete($query2);
     }
 
 
