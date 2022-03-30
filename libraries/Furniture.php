@@ -37,9 +37,32 @@ class Furniture extends Product{
         return;
     }
     public function setSpecificAttributes($row): void {
-        $this->height = (float)$row['height'];
-        $this->width = (float)$row['width'];
-        $this->length = (float)$row['length'];
+        $heigth = $row['height'];
+        $width = $row['width'];
+        $length = $row['length'];
+        if (empty($heigth)){
+            throw new Exception("Please, submit requied data");
+        }
+        if (!$this->validNumberField($heigth)){
+            throw new Exception("Please, provide the data of indicated type");
+        }
+        if (empty($width)){
+            throw new Exception("Please, submit requied data");
+        }
+        if (!$this->validNumberField($width)){
+            throw new Exception("Please, provide the data of indicated type");
+        }
+        if (empty($length)){
+            throw new Exception("Please, submit requied data");
+        }
+        if (!$this->validNumberField($length)){
+            throw new Exception("Please, provide the data of indicated type");
+        }
+        
+        $this->height = (float)$heigth;
+        $this->width = (float)$width;
+        $this->length = (float)$length;
+        
 //        $this->height =  filter_input(INPUT_POST, 'Height');
 //        $this->width =  filter_input(INPUT_POST, 'Width');
 //        $this->length =  filter_input(INPUT_POST, 'Length');
@@ -48,11 +71,12 @@ class Furniture extends Product{
         return "Dimension: ".$this->height.'x'.$this->width.'x'.$this->length;
     }
     public function addProductToDB() {
-        $db = new Database();
        
+       $db = new Database();
        $query1 = "INSERT INTO `Product` (`sku`, `name`, `price`, `height`, `width`, `length`, `type`) "
               . "VALUES ('$this->sku', '$this->name', '$this->price', '$this->height', '$this->width', '$this->length', 'Furniture');";
        $db->insert($query1);
+       
     }
 
 

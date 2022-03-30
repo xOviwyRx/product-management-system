@@ -28,24 +28,12 @@ require_once './header.php';
             <?php
             //*Filling array products from the database*//
 
-    //        $records = $db->select($db->getQueryAllRecords());
-    //        $products = array();
-    //        foreach ($records as $row){
-    //           $name = $row['name'];
-    //           $sku = $row['sku'];
-    //           $price = $row['price'];
-    //                
-    //           $product = new $row['type']($name, $sku, $price);
-    //           $product->setSpecificAttributes($row);
-    //           $products[] = $product; 
             $products = Product::getAllProductsFromDB($db);
             $checked_records = array();
            
 //            foreach ($products as $product){
             for ($i = 0; $i < sizeof($products); $i++){
-//                if (($i>0) and ($i % 4 == 0)){
-//                    print "</div><div class='row'>";
-//                }
+//            
                 $product = $products[$i];
                 
                 ?>
@@ -83,8 +71,6 @@ require_once './header.php';
         ?>  
             
     </div>
-    
-    
     
  </body>
 </html>

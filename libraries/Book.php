@@ -23,7 +23,14 @@ class Book extends Product{
         return;
     }
     public function setSpecificAttributes($row): void {
-        $this->weight = (float)$row['weight'];
+        $weight = $row['weight'];
+        if (empty($weight)){
+            throw new Exception("Please, submit requied data");
+        }
+        if (!$this->validNumberField($weight)){
+            throw new Exception("Please, provide the data of indicated type");
+        }
+        $this->weight = (float)$weight;
 //         $this->weight = filter_input(INPUT_POST, 'Weight');
     }
     public function getSpecificAttributes(): string {

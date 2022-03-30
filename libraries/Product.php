@@ -18,11 +18,28 @@ abstract class Product {
     protected int $product_id;
     
     public function __construct(string $name, string $sku, string $price) {
+        
+        if (empty($name) || empty($sku) || empty($price)){
+            throw new Exception("Please, submit requied data");
+        }
+        if (!$this->validNumberField($price)){
+            throw new Exception("Please, provide the data of indicated type");
+        }
+        
         $this->name = $name;
         $this->sku = $sku;
         $this->price = $price;
     }
-//    
+    
+    protected function validNumberField($number) : bool {
+            
+        $pattern = '/^[0-9]+(\.[0-9]{1,2})?$/';
+        if (preg_match($pattern, $number)){
+                return true;
+            }
+        return false;
+    }
+    
     public function getSku(): string {
         return $this->sku;
     }
@@ -97,11 +114,16 @@ abstract class Product {
            $sku = $row['sku'];
            $price = $row['price'];
            $product_id = $row['product_id'];
-                
-           $product = new $row['type']($name, $sku, $price);
-           $product->setSpecificAttributes($row);
-           $product->setProductId($product_id);
-           $products[] = $product; 
+           
+//           try{
+            $product = new $row['type']($name, $sku, $price);
+            $product->setSpecificAttributes($row);
+            $product->setProductId($product_id);
+            $products[] = $product; 
+//           }
+//           catch (Exception $e){
+//               echo $e;
+//           }
         }
         return $products;
     }
@@ -113,6 +135,7 @@ abstract class Product {
 
 
     abstract public function addProductToDB();
+    
     public function showProduct(){
         
     }

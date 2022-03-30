@@ -6,18 +6,40 @@ require './libraries/Product.php';
 require './libraries/DVD.php';
 require './libraries/Book.php';
 require './libraries/Furniture.php';
+        
+//        echo $_POST['typeswitcher'];
+//        echo json_encode(['code'=>200, 'msg'=>$_POST['typeswitcher']]);
+        $typeswitcher = filter_input(INPUT_POST, 'typeswitcher');
+//        echo 'something wrong';
+//        //$checked_products = filter_input(INPUT_POST, 'checked_products');
+//        //echo $checked_products[0];
+////        if (isset($_POST['save'])){
+            $name = filter_input(INPUT_POST, 'name');
+            $sku = filter_input(INPUT_POST, 'sku');
+            $price = filter_input(INPUT_POST, 'price');
+            try
+            {
+                $product = new $typeswitcher($name, $sku, $price);
+                $product->setSpecificAttributes(filter_input_array(INPUT_POST));
+                $product->addProductToDB();
+                echo json_encode(['code'=>'200', 'msg'=>'success']);
+            }
+            catch(Exception $e){
+                echo json_encode(['code'=>'404', 'msg'=>$e->getMessage()]);
+            }
+//        }
 
-$typeswitcher = filter_input(INPUT_POST, 'typeswitcher');
-//$checked_products = filter_input(INPUT_POST, 'checked_products');
-//echo $checked_products[0];
-if (!is_null($typeswitcher)){
-    $name = filter_input(INPUT_POST, 'name');
-    $sku = filter_input(INPUT_POST, 'sku');
-    $price = filter_input(INPUT_POST, 'price');
-    $product = new $typeswitcher($name, $sku, $price);
-    $product->setSpecificAttributes(filter_input_array(INPUT_POST));
-    $product->addProductToDB();
-}
+//$typeswitcher = filter_input(INPUT_POST, 'typeswitcher');
+////$checked_products = filter_input(INPUT_POST, 'checked_products');
+////echo $checked_products[0];
+//if (!is_null($typeswitcher)){
+//    $name = filter_input(INPUT_POST, 'name');
+//    $sku = filter_input(INPUT_POST, 'sku');
+//    $price = filter_input(INPUT_POST, 'price');
+//    $product = new $typeswitcher($name, $sku, $price);
+//    $product->setSpecificAttributes(filter_input_array(INPUT_POST));
+//    $product->addProductToDB();
+//}
 
 //else{
 //    foreach ($checked_products as $value){
