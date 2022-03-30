@@ -63,9 +63,6 @@ class Furniture extends Product{
         $this->width = (float)$width;
         $this->length = (float)$length;
         
-//        $this->height =  filter_input(INPUT_POST, 'Height');
-//        $this->width =  filter_input(INPUT_POST, 'Width');
-//        $this->length =  filter_input(INPUT_POST, 'Length');
     }
     public function getSpecificAttributes(): string {
         return "Dimension: ".$this->height.'x'.$this->width.'x'.$this->length;

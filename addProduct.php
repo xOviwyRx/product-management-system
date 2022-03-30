@@ -1,6 +1,5 @@
 <?php
 $title = "Product Add";
-require './libraries/Button.php';
 $form_id = "product_form";
 include_once './header.php';
 ?>
@@ -21,14 +20,6 @@ include_once './header.php';
                           />
                     </div>
                 </div>
-<!--                <div class="row mb-3">
-                    <label class="col-form-label col-sm-3" for="name">Name</label>
-                    <div class="col-sm-9">
-                        <input name="name" class="form-control" id="name" required
-                          oninvalid="this.setCustomValidity('Please, submit required data')"
-                            oninput="this.setCustomValidity('')"/>
-                    </div>
-                </div>-->
                 <div class="row mb-3">
                     <label class="col-form-label col-sm-3" for="name">Name</label>
                     <div class="col-sm-9">
@@ -57,11 +48,6 @@ include_once './header.php';
                 <div class="row mb-3" id ="noDVD">
                     <label class="col-form-label col-sm-3" for="size">Size (MB)</label>
                     <div class="col-sm-9">
-<!--                        <input class="form-control" type="number" name="size"
-                               min="0" placeholder="0.00" id="size"
-oninvalid="this.setCustomValidity('Please, submit required data')"
-                            oninput="this.setCustomValidity('')" min="0">
-                            min="0">-->
                         <input placeholder="0.00" class="form-control" name="size"
                               id="size" required/>
                         <p class="mt-3">Please, provide size</p>
@@ -98,26 +84,6 @@ oninvalid="this.setCustomValidity('Please, submit required data')"
                     </div> 
                 </div>
         </form>
-        <?php
-//        
-//            $typeswitcher = filter_input(INPUT_POST, 'typeswitcher');
-//            //$checked_products = filter_input(INPUT_POST, 'checked_products');
-//            //echo $checked_products[0];
-////        if (isset($_POST['save'])){
-//            $name = filter_input(INPUT_POST, 'name');
-//            $sku = filter_input(INPUT_POST, 'sku');
-//            $price = filter_input(INPUT_POST, 'price');
-//            try
-//            {
-//                $product = new $typeswitcher($name, $sku, $price);
-//                $product->setSpecificAttributes(filter_input_array(INPUT_POST));
-//                $product->addProductToDB();
-//            }
-//            catch(Exception $e){
-//                echo $e->getMessage();
-//            }
-////        }
-////        ?>
             
             </section>
                 <?php 

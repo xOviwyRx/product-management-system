@@ -33,12 +33,6 @@ class Database{
     public function insert($query){
         $insert_row = $this->link->query($query) or die($this->link->error.__LINE__);
         
-        if ($insert_row){
-//            header("Location: index.php");
-//            exit();
-        } else{
-            die('Error : ('. $this->link->errno .') '. $this->link->error);
-        }
         if (!$insert_row){
             die('Error : ('. $this->link->errno .') '. $this->link->error);
         }
@@ -58,10 +52,7 @@ class Database{
     public function delete($query){
         $delete_row = $this->link->query($query) or die($this->link->error.__LINE__);
         
-        if ($delete_row){
-//            header("Location: index.php?msg=".urlencode('Record Deleted'));
-//            exit();
-        } else{
+        if (!$delete_row){
             die('Error : ('. $this->link->errno .') '. $this->link->error);
         }
     }

@@ -61,17 +61,14 @@ abstract class Product {
     }
     
     public function setSku($sku): void {
-//        $this->sku = filter_input(INPUT_POST, 'SKU');
         $this->sku = $sku;
     }
 
     public function setName($name): void {
-//      $this->sku = filter_input(INPUT_POST, 'Name');
         $this->name = $name;
     }
 
     public function setPrice($price): void {
-    //  $this->price = filter_input(INPUT_POST, 'Price');
         $this->price = $price;
     }
     abstract public function setSpecificAttributes($row): void;

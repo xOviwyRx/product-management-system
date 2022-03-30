@@ -17,15 +17,12 @@ class DVD extends Product{
         return $this->size;
     }
     public function setSize($size): void {
-//        $this->size = filter_input(INPUT_POST, 'Size');
-        
         $this->size = $size;
     }
     public function insertRecord(): void {
         return;
     }
     public function setSpecificAttributes($row): void {
-//        $this->size = filter_input(INPUT_POST, 'Size');
         $size = $row['size'];
         if (empty($size)){
             throw new Exception("Please, submit requied data");
