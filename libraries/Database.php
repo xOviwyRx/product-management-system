@@ -30,11 +30,15 @@ class Database{
         }
     }
     
-    public function insert($query){
+    public function insert($query) : string{
         $insert_row = $this->link->query($query) or die($this->link->error.__LINE__);
         
         if (!$insert_row){
             die('Error : ('. $this->link->errno .') '. $this->link->error);
+        }
+        else
+        {
+            return $this->link->insert_id;
         }
     }
     

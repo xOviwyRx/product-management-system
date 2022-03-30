@@ -37,11 +37,15 @@ class DVD extends Product{
     }
     public function addProductToDB() {
         
-        $db = new Database();
+       $db = new Database();
+       $spec_attributes = json_encode(['size' => $this->size]);
+       $query1 = "INSERT INTO `Product` (`sku`, `name`, `price`, `spec_attributes`)"
+              . "VALUES ('$this->sku', '$this->name', '$this->price', '$spec_attributes');";
        
-       $query1 = "INSERT INTO `Product` (`sku`, `name`, `price`, `size`, `type`) "
-              . "VALUES ('$this->sku', '$this->name', '$this->price', '$this->size', 'DVD');";
-       $db->insert($query1);
-        
+       $product_id = $db->insert($query1);
+      
+       $query2 = "INSERT INTO `ProductType` (`product_id`, `type_id`) "
+              . "VALUES ('$product_id', '1');";
+       $db->insert($query2);
     }
 }

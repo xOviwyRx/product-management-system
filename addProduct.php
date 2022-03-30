@@ -48,7 +48,7 @@ include_once './header.php';
                 <div class="row mb-3" id ="noDVD">
                     <label class="col-form-label col-sm-3" for="size">Size (MB)</label>
                     <div class="col-sm-9">
-                        <input placeholder="0.00" class="form-control" name="size"
+                        <input placeholder="0.0" class="form-control" name="size"
                               id="size" required/>
                         <p class="mt-3">Please, provide size</p>
                     </div>
@@ -56,7 +56,7 @@ include_once './header.php';
                 <div class="row mb-3" id="noBook">
                     <label class="col-form-label col-sm-3" for="weight">Weight (KG)</label>
                     <div class="col-sm-9">    
-                        <input class="form-control" placeholder="0.00" name="weight" id="weight"/>
+                        <input class="form-control" placeholder="0.0" name="weight" id="weight"/>
                         <p class="mt-3">Please, provide weight</p>
                     </div>
                 </div>
@@ -64,20 +64,20 @@ include_once './header.php';
                     <div class="row mb-3">
                         <label class="col-form-label col-sm-3" for="height">Height (CM)</label>
                         <div class="col-sm-9">
-                            <input class="form-control" placeholder="0.00"  name="height" id ="height" />
+                            <input class="form-control" placeholder="0.0"  name="height" id ="height" />
                         
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label class="col-form-label col-sm-3" for="width">Width (CM)</label>
                         <div class="col-sm-9">
-                            <input class="form-control" placeholder="0.00" name="width" id ="width"/>
+                            <input class="form-control" placeholder="0.0" name="width" id ="width"/>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label class="col-form-label col-sm-3" for="length">Length (CM)</label>
                         <div class="col-sm-9">
-                            <input class="form-control" name="length" id ="length" placeholder="0.00"/>
+                            <input class="form-control" name="length" id ="length" placeholder="0.0"/>
                             <p class="mt-3">Please, provide dimensions</p>
                         </div>
                         
@@ -115,7 +115,7 @@ include_once './header.php';
                       }
                       else
                       {
-                          $("#error-valid").css("display","none");
+                          location.href = "index.php";  
                       }      
                   }
                   
