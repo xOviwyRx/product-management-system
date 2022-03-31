@@ -3,14 +3,14 @@
 $title = "Product List";
 $form_id = "list_form";
 
+
 require_once './header.php';
  
     if (isset($_POST['delete'])){
                 if (!empty($_POST['checked_products'])){
                     foreach ($_POST['checked_products'] as $product_id){
-                        Product::deleteProductById($db, $product_id);
+                        classes\Product::deleteProductById($db, $product_id);
                     }
-//                    header("Location: index.php?msg=".urlencode('Record(s) Deleted'));
                     header("Location: index.php");
                 }
             }
@@ -23,19 +23,15 @@ require_once './header.php';
             <div>
             <form method = "post" action="" class="ml-3" id = "list_form">
                 <div class="container-fluid">
-                    <div class="row">
-                 <!--<div class='row'>-->   
+                    <div class="row"> 
             <?php
             //*Filling array products from the database*//
 
-            $products = Product::getAllProductsFromDB($db);
+            $products = classes\Product::getAllProductsFromDB($db);
             $checked_records = array();
-           
-//            foreach ($products as $product){
-            for ($i = 0; $i < sizeof($products); $i++){
-//            
+          
+            for ($i = 0; $i < sizeof($products); $i++){          
                 $product = $products[$i];
-                
                 ?>
                  <label for='product<?php echo $i."_input_checkbox" ?>'>
                     <div class="mr-5 mt-3 border border-dark mb-4 p-3 pb-5" style="width: 230px">
@@ -48,29 +44,18 @@ require_once './header.php';
                         <p class="text-center m-0"><?php print $product->getSpecificAttributes() ?></p>
                     </div>
                  </label>
-                <?php
-                    
+                <?php  
             }
-            
-                    
-            
             ?>
-                 
                     </div>
                 </div>
-                
             </form>
             
             </div>
             </section>
-        
-       <?php
-            
-            
+       <?php 
         include "./footer.html";
-        ?>  
-            
+        ?>    
     </div>
-    
  </body>
 </html>

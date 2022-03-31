@@ -1,9 +1,6 @@
 <?php
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/PHPClass.php to edit this template
- */
+namespace classes;
 
 /**
  * Description of Book
@@ -18,24 +15,21 @@ class Book extends Product{
     public function setWeight($weight): void {
         $this->weight = $weight;
     }
-    public function insertRecord(): void {
-        return;
-    }
     public function setSpecificAttributes($row): void {
         $weight = $row['weight'];
         if (empty($weight)){
-            throw new Exception("Please, submit requied data");
+            throw new \Exception("Please, submit requied data");
         }
         if (!$this->validNumberField($weight)){
-            throw new Exception("Please, provide the data of indicated type");
+            throw new \Exception("Please, provide the data of indicated type");
         }
         $this->weight = (float)$weight;
     }
     public function getSpecificAttributes(): string {
         return "Weight: ".$this->weight." KG";
     }
-    public function addProductToDB(){
-       $db = new Database();
+    public function addProductToDB($db){
+//       $db = new Database();
        $spec_attributes = json_encode(['weight' => $this->weight]);
        $query1 = "INSERT INTO `Product` (`sku`, `name`, `price`, `spec_attributes`)"
               . "VALUES ('$this->sku', '$this->name', '$this->price', '$spec_attributes');";

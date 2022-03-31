@@ -1,5 +1,6 @@
 <?php
 
+namespace classes;
 
 /**
  * Description of Furniture
@@ -22,6 +23,7 @@ class Furniture extends Product{
     public function getLength(): float {
         return $this->length;
     }
+    
     public function setWidth(float $width): void {
         $this->width = $width;
     }
@@ -33,30 +35,17 @@ class Furniture extends Product{
     public function setLength(float $length): void {
         $this->length = $length;
     }
-    public function insertRecord(): void {
-        return;
-    }
     public function setSpecificAttributes($row): void {
         $heigth = $row['height'];
         $width = $row['width'];
         $length = $row['length'];
-        if (empty($heigth)){
-            throw new Exception("Please, submit requied data");
+        if (empty($heigth) || empty($width) || empty ($length)){
+            throw new \Exception("Please, submit requied data");
         }
-        if (!$this->validNumberField($heigth)){
-            throw new Exception("Please, provide the data of indicated type");
-        }
-        if (empty($width)){
-            throw new Exception("Please, submit requied data");
-        }
-        if (!$this->validNumberField($width)){
-            throw new Exception("Please, provide the data of indicated type");
-        }
-        if (empty($length)){
-            throw new Exception("Please, submit requied data");
-        }
-        if (!$this->validNumberField($length)){
-            throw new Exception("Please, provide the data of indicated type");
+        if (!$this->validNumberField($heigth)
+              ||  !$this->validNumberField($width)
+                || !$this->validNumberField($length)){
+            throw new \Exception("Please, provide the data of indicated type");
         }
         
         $this->height = (float)$heigth;
@@ -67,16 +56,16 @@ class Furniture extends Product{
     public function getSpecificAttributes(): string {
         return "Dimension: ".$this->height.'x'.$this->width.'x'.$this->length;
     }
-    public function addProductToDB() {
+    public function addProductToDB($db) {
        
-       $db = new Database();
+//       $db = new Database();
        
        $spec_attributes = json_encode(['height' => $this->height, 'width' => $this->width, 'length' => $this->length]);
        $query1 = "INSERT INTO `Product` (`sku`, `name`, `price`, `spec_attributes`)"
               . "VALUES ('$this->sku', '$this->name', '$this->price', '$spec_attributes');";
        
        $product_id = $db->insert($query1);
-      
+       
        $query2 = "INSERT INTO `ProductType` (`product_id`, `type_id`) "
               . "VALUES ('$product_id', '3');";
        $db->insert($query2);

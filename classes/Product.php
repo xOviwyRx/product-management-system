@@ -1,9 +1,7 @@
 <?php
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/PHPClass.php to edit this template
- */
+namespace classes;
+
 
 /**
  * Description of Product
@@ -20,10 +18,10 @@ abstract class Product {
     public function __construct(string $name, string $sku, string $price) {
         
         if (empty($name) || empty($sku) || empty($price)){
-            throw new Exception("Please, submit requied data");
+            throw new \Exception("Please, submit requied data");
         }
         if (!$this->validNumberField($price, '/^[0-9]+(\.[0-9]{1,2})?$/')){
-            throw new Exception("Please, provide the data of indicated type");
+            throw new \Exception("Please, provide the data of indicated type");
         }
         
         $this->name = $name;
@@ -82,19 +80,6 @@ abstract class Product {
                   ProductType.type_id = Type.type_id
                   ORDER BY Product.product_id
                   ";
-//        $query = "SELECT Product.product_id, Product.sku, Product.name, Product.price,
-//        size, weight, width, length, height, Type.name as type
-//        FROM Product
-//        INNER JOIN ProductType ON
-//        Product.product_id = ProductType.product_id
-//        INNER JOIN Type ON
-//        ProductType.type_id = Type.type_id
-//        ORDER BY Product.product_id
-//        ";
-//        $query = "SELECT product_id, sku, name, price,
-//        size, weight, width, length, height, type
-//        FROM Product
-//        ORDER BY product_id";
         return $query;
     }
     
@@ -107,11 +92,11 @@ abstract class Product {
            $sku = $row['sku'];
            $price = $row['price'];
            $product_id = $row['product_id'];
-           $type = $row['type'];
+           $className = "classes\\".$row['type'];
            $spec_attributes = json_decode($row['spec_attributes'], true);
            
 //           try{
-           $product = new $type($name, $sku, $price);
+           $product = new $className($name, $sku, $price);
            $product->setSpecificAttributes($spec_attributes);
            $product->setProductId($product_id);
            $products[] = $product; 
@@ -133,13 +118,10 @@ abstract class Product {
     }
 
 
-    abstract public function addProductToDB();
+    abstract public function addProductToDB($db);
     
     public function showProduct(){
         
     }
-//    abstract public function setAdditionalProperties();
-//    abstract public function insertRecord(): void;
-//    abstract public function getQuery(): string;
 
 }

@@ -91,9 +91,6 @@ include_once './header.php';
        ?>
        </div>  
        
-       
-       
-        
     </body>
     <script src="js/main.js"></script>
     <script type="text/javascript">

@@ -1,5 +1,9 @@
 <?php
 
+namespace classes;
+
+use mysqli;
+
 class Database{
     public $host = DB_HOST;
     private $username = DB_USER;
@@ -10,13 +14,14 @@ class Database{
     public $error;
     
     public function __construct(){
-        $this->connect();
+         $this->connect();
+
     }
     
     private function connect(){
     $this->link = new mysqli($this->host, $this->username, $this->password, $this->db_name);
     if ($this->link->connect_error){
-        $this->error = "Connection fail:".$this->link->connection_error;
+        $this->error = "Connection fail: ".$this->link->connect_error;
         return false;
        }
     }
@@ -55,7 +60,6 @@ class Database{
     
     public function delete($query){
         $delete_row = $this->link->query($query) or die($this->link->error.__LINE__);
-        
         if (!$delete_row){
             die('Error : ('. $this->link->errno .') '. $this->link->error);
         }

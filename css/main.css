@@ -30,6 +30,10 @@ hr{
 p{
    word-wrap: break-word;
 }
+
+.alert{
+    height: 45px;
+}
 /*.footer {
     
 }*/
