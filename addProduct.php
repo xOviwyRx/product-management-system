@@ -4,7 +4,7 @@ $form_id = "product_form";
 include_once './header.php';
 ?> 
                     <button class="mr-4 btn btn-outline-dark" form ="product_form" id="submit" type="submit" name="save">Save</button>
-                    <button class="mr-4 btn btn-outline-dark" onclick="window.location.href='/index.php'" class="mr-2">Cancel</button>
+                    <button class="mr-4 btn btn-outline-dark" onclick="window.location.href='/index.php'">Cancel</button>
                 </div> 
             </div>
             <hr>
