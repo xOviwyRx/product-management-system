@@ -2,15 +2,14 @@
 $title = "Product Add";
 $form_id = "product_form";
 include_once './header.php';
-?>
-            
-                    <button class="mr-4 btn btn-outline-dark" form ="product_form" id="submit" type="submit" name="save" class="mr-3">Save</button>
-                    <button class="mr-4 btn btn-outline-dark" onclick="window.location.href='index.php'" class="mr-2">Cancel</button>
+?> 
+                    <button class="mr-4 btn btn-outline-dark" form ="product_form" id="submit" type="submit" name="save">Save</button>
+                    <button class="mr-4 btn btn-outline-dark" onclick="window.location.href='/index.php'" class="mr-2">Cancel</button>
                 </div> 
             </div>
             <hr>
             
-            <form class="mt-4" style="width:500px" method = "post" action="submit.php" id = "product_form">
+            <form class="mt-4" style="width:500px" method = "post" action="./submit.php" id = "product_form">
                 <div class="alert alert-danger display-error" style="display: none" id="error-valid">
                 </div>
                 <div class="row mb-3">
@@ -37,9 +36,10 @@ include_once './header.php';
                 </div>
                 <div class="row mb-3">
                     <label class="col-form-label col-sm-4" for="typeswitcher" id="typeswitcher">Type Switcher</label>
-                    <div class="col-sm-3 select_box">
-                        <select class="form-control" name = "typeswitcher" id="productType">
-                            <option value = "DVD" id="DVD" selected>DVD</option>
+                    <div class="col-sm-5 select_box">
+                        <select style="height:40px;" class="form-control" name = "typeswitcher" id="productType">
+                            <option value ="" disabled>Type Switcher</option>
+                            <option value = "DVD" id="DVD">DVD</option>
                             <option value = "Book" id="Book">Book</option>
                             <option value = "Furniture" id="Furniture">Furniture</option>
                         </select>
@@ -92,7 +92,7 @@ include_once './header.php';
        </div>  
        
     </body>
-    <script src="js/main.js"></script>
+    <script src="js/addProduct.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
 
@@ -112,7 +112,7 @@ include_once './header.php';
                       }
                       else
                       {
-                          location.href = "index.php";  
+                          location.href = "/index.php";  
                       }      
                   }
                   

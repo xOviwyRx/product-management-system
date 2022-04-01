@@ -24,7 +24,7 @@ hr{
 .select_box{
     font-weight: bold !important;
 }
-#noFurniture,#noBook {
+#noFurniture, #noBook, #noDVD {
   display:none;
 }
 p{

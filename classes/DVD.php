@@ -8,7 +8,7 @@ namespace classes;
  * @author xoviwyrx
  */
 class DVD extends Product{
-    private float $size;
+    private $size;
     
     public function getSize(): int {
         return $this->size;
@@ -19,7 +19,7 @@ class DVD extends Product{
     public function setSpecificAttributes($row): void {
         $size = $row['size'];
         if (empty($size)){
-            throw new \Exception("Please, submit requied data");
+            throw new \Exception("Please, submit required data");
         }
         if (!$this->validNumberField($size)){
             throw new \Exception("Please, provide the data of indicated type");

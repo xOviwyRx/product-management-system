@@ -10,15 +10,15 @@ namespace classes;
  */
 abstract class Product {
     
-    protected string $sku;
-    protected string $name;
-    protected string $price;
-    protected int $product_id;
+    protected $sku;
+    protected $name;
+    protected $price;
+    protected $product_id;
     
     public function __construct(string $name, string $sku, string $price) {
         
         if (empty($name) || empty($sku) || empty($price)){
-            throw new \Exception("Please, submit requied data");
+            throw new \Exception("Please, submit required data");
         }
         if (!$this->validNumberField($price, '/^[0-9]+(\.[0-9]{1,2})?$/')){
             throw new \Exception("Please, provide the data of indicated type");

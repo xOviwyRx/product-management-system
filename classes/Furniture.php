@@ -8,9 +8,9 @@ namespace classes;
  * @author xoviwyrx
  */
 class Furniture extends Product{
-    private float $width;
-    private float $height;
-    private float $length;
+    private $width;
+    private $height;
+    private $length;
     
     public function getWidth(): float {
         return $this->width;
@@ -40,7 +40,7 @@ class Furniture extends Product{
         $width = $row['width'];
         $length = $row['length'];
         if (empty($heigth) || empty($width) || empty ($length)){
-            throw new \Exception("Please, submit requied data");
+            throw new \Exception("Please, submit required data");
         }
         if (!$this->validNumberField($heigth)
               ||  !$this->validNumberField($width)

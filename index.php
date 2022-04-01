@@ -3,25 +3,18 @@
 $title = "Product List";
 $form_id = "list_form";
 
-
 require_once './header.php';
- 
-    if (isset($_POST['delete'])){
-                if (!empty($_POST['checked_products'])){
-                    foreach ($_POST['checked_products'] as $product_id){
-                        classes\Product::deleteProductById($db, $product_id);
-                    }
-                    header("Location: index.php");
-                }
-            }
 ?>
-                  <button class="mr-4 btn btn-outline-dark" onclick="window.location.href='addProduct.php'" class="mr-4">ADD</button>
-                  <button class="mr-4 btn btn-outline-dark mr-4" form = "list_form" type="submit" name="delete" id="delete-product-btn" class="mr-3">MASS DELETE</button>
+
+                    <button class="mr-5 btn btn-outline-dark" name="ADD" value="ADD" type="button" onclick="window.location.href='/addProduct.php'"> ADD 
+                    </button>  
+                    <button class="mr-4 btn btn-outline-dark" form = "list_form" type="submit" name="delete" id="delete-product-btn">MASS DELETE</button>
                 </div>
             </div>
             <hr>
-            <div>
-            <form method = "post" action="" class="ml-3" id = "list_form">
+           
+    
+            <form method = "post" action="submit.php" class="ml-3" id = "list_form">
                 <div class="container-fluid">
                     <div class="row"> 
             <?php
@@ -51,11 +44,11 @@ require_once './header.php';
                 </div>
             </form>
             
-            </div>
             </section>
+          <!--</div>--> 
        <?php 
         include "./footer.html";
         ?>    
-    </div>
+    
  </body>
 </html>

@@ -8,7 +8,7 @@ namespace classes;
  * @author xoviwyrx
  */
 class Book extends Product{
-    private float $weight;
+    private $weight;
     public function getWeight(): float {
         return $this->weight;
     }
@@ -18,7 +18,7 @@ class Book extends Product{
     public function setSpecificAttributes($row): void {
         $weight = $row['weight'];
         if (empty($weight)){
-            throw new \Exception("Please, submit requied data");
+            throw new \Exception("Please, submit required data");
         }
         if (!$this->validNumberField($weight)){
             throw new \Exception("Please, provide the data of indicated type");
