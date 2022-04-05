@@ -96,15 +96,14 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/header.php';
     <script type="text/javascript">
         $(document).ready(function() {
 
-            $('#submit').click(function(e){
+            $('#product_form').submit(function(e){
               e.preventDefault();
-              var form = $("#product_form");
               
               $.ajax({
                   type: "POST",
                   dataType: "json",
-                  data: form.serialize(),
-                  url: form.attr('action'),
+                  data: $(this).serialize(),
+                  url: $(this).attr('action'),
                   success: function(data){
                       if (data.code === "404"){
                            $("#error-valid").html("<p>"+data.msg+"</p>");
