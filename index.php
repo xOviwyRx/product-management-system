@@ -2,11 +2,10 @@
 
 $title = "Product List";
 $form_id = "list_form";
-
-require_once './header.php';
+require_once 'header.php';
 ?>
 
-                    <button class="mr-5 btn btn-outline-dark" name="ADD" value="ADD" type="button" onclick="window.location.href='/addProduct.php'"> ADD 
+                    <button class="mr-5 btn btn-outline-dark" name="ADD" value="ADD" type="button" onclick="window.location.href='/addProduct/'"> ADD 
                     </button>  
                     <button class="mr-4 btn btn-outline-dark" form = "list_form" type="submit" name="delete" id="delete-product-btn">MASS DELETE</button>
                 </div>

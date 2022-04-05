@@ -29,7 +29,6 @@ class Book extends Product{
         return "Weight: ".$this->weight." KG";
     }
     public function addProductToDB($db){
-//       $db = new Database();
        $spec_attributes = json_encode(['weight' => $this->weight]);
        $query1 = "INSERT INTO `Product` (`sku`, `name`, `price`, `spec_attributes`)"
               . "VALUES ('$this->sku', '$this->name', '$this->price', '$spec_attributes');";

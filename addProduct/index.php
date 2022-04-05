@@ -1,7 +1,7 @@
 <?php
 $title = "Product Add";
 $form_id = "product_form";
-include_once './header.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/header.php';
 ?> 
                     <button class="mr-4 btn btn-outline-dark" form ="product_form" id="submit" type="submit" name="save">Save</button>
                     <button class="mr-4 btn btn-outline-dark" onclick="window.location.href='/index.php'">Cancel</button>
@@ -87,12 +87,12 @@ include_once './header.php';
             
             </section>
                 <?php 
-       include "./footer.html";
+       include "../footer.html";
        ?>
        </div>  
        
     </body>
-    <script src="js/addProduct.js"></script>
+    <script src="../js/addProduct/main.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
 

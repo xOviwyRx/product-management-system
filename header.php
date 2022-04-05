@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <?php 
 include_once 'config/config.php';
-require_once './classes/autoload.php';
+require_once 'classes/autoload.php';
 
 $db = new classes\Database();
 if (!(empty($db->error))){
@@ -13,9 +13,9 @@ if (!(empty($db->error))){
     <head>
         <meta charset="UTF-8">
         <title><?php echo $title ?></title>
-        <link rel="stylesheet" type="text/css" href="css/library/bootstrap.min.css" />
-        <link rel="stylesheet" type="text/css" href="css/main.css" />
-        <script src="js/library/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="/css/library/bootstrap.min.css" />
+        <link rel="stylesheet" type="text/css" href="/css/main.css" />
+        <script src="/js/library/bootstrap.min.js"></script>
         <script
 			  src="https://code.jquery.com/jquery-3.6.0.js"
 			  integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
