@@ -17,7 +17,7 @@ if (!empty($typeswitcher)){
     {
         $product = new $type($name, $sku, $price);
         $product->setSpecificAttributes(filter_input_array(INPUT_POST));
-        $product->addProductToDB($db);
+        $product->addProductToDB($db, $type);
         echo json_encode(['code'=>'200', 'msg'=>'success']);
     }
     catch(\Exception $e){

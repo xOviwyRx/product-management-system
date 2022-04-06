@@ -116,9 +116,27 @@ abstract class Product {
                 . "WHERE product_id = ".$product_id.";";
         $db->delete($query2);
     }
+    abstract protected function getSpecificAttributesInJSON() : string;
+    
+    public function getClassName():string{
+        $path = explode('\\', static::class);
+        return array_pop($path);
+    }
+    private function getTypeId($db):int{
+       $query_select = "SELECT type_id FROM Type WHERE name = '".$this->getClassName()."';";
+       return $db->select($query_select)->fetch_row()[0];
+    }
 
-
-    abstract public function addProductToDB($db);
+    public function addProductToDB($db){
+       $spec_attributes = $this->getSpecificAttributesInJSON();
+       $query_insert = "INSERT INTO `Product` (`sku`, `name`, `price`, `spec_attributes`)"
+              . "VALUES ('$this->sku', '$this->name', '$this->price', '$spec_attributes');";
+       $product_id = $db->insert($query_insert);
+       $type_id = $this->getTypeId($db);
+       $query_insert = "INSERT INTO `ProductType` (`product_id`, `type_id`) "
+              . "VALUES ('$product_id', '$type_id');";
+       $db->insert($query_insert);
+    }
     
     public function showProduct(){
         

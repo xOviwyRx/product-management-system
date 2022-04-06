@@ -9,6 +9,7 @@ namespace classes;
  */
 class Book extends Product{
     private $weight;
+//    protected const TYPE_ID = 2;
     public function getWeight(): float {
         return $this->weight;
     }
@@ -25,18 +26,11 @@ class Book extends Product{
         }
         $this->weight = (float)$weight;
     }
+    protected function getSpecificAttributesInJSON():string{
+        return json_encode(['weight' => $this->weight]);
+    }
+    
     public function getSpecificAttributes(): string {
         return "Weight: ".$this->weight." KG";
-    }
-    public function addProductToDB($db){
-       $spec_attributes = json_encode(['weight' => $this->weight]);
-       $query1 = "INSERT INTO `Product` (`sku`, `name`, `price`, `spec_attributes`)"
-              . "VALUES ('$this->sku', '$this->name', '$this->price', '$spec_attributes');";
-       
-       $product_id = $db->insert($query1);
-      
-       $query2 = "INSERT INTO `ProductType` (`product_id`, `type_id`) "
-              . "VALUES ('$product_id', '2');";
-       $db->insert($query2);
     }
 }

@@ -9,7 +9,7 @@ namespace classes;
  */
 class DVD extends Product{
     private $size;
-    
+//    protected const TYPE_ID = 1;
     public function getSize(): int {
         return $this->size;
     }
@@ -29,17 +29,8 @@ class DVD extends Product{
     public function getSpecificAttributes(): string {
         return "Size: ".$this->size." MB";
     }
-    public function addProductToDB($db) {
-        
-//       $db = new Database();
-       $spec_attributes = json_encode(['size' => $this->size]);
-       $query1 = "INSERT INTO `Product` (`sku`, `name`, `price`, `spec_attributes`)"
-              . "VALUES ('$this->sku', '$this->name', '$this->price', '$spec_attributes');";
-       
-       $product_id = $db->insert($query1);
-      
-       $query2 = "INSERT INTO `ProductType` (`product_id`, `type_id`) "
-              . "VALUES ('$product_id', '1');";
-       $db->insert($query2);
+    protected function getSpecificAttributesInJSON():string{
+        return json_encode(['size' => $this->size]);
     }
 }
+

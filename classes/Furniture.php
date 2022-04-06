@@ -11,6 +11,7 @@ class Furniture extends Product{
     private $width;
     private $height;
     private $length;
+//    protected const TYPE_ID = 3;
     
     public function getWidth(): float {
         return $this->width;
@@ -56,20 +57,7 @@ class Furniture extends Product{
     public function getSpecificAttributes(): string {
         return "Dimension: ".$this->height.'x'.$this->width.'x'.$this->length;
     }
-    public function addProductToDB($db) {
-       
-//       $db = new Database();
-       
-       $spec_attributes = json_encode(['height' => $this->height, 'width' => $this->width, 'length' => $this->length]);
-       $query1 = "INSERT INTO `Product` (`sku`, `name`, `price`, `spec_attributes`)"
-              . "VALUES ('$this->sku', '$this->name', '$this->price', '$spec_attributes');";
-       
-       $product_id = $db->insert($query1);
-       
-       $query2 = "INSERT INTO `ProductType` (`product_id`, `type_id`) "
-              . "VALUES ('$product_id', '3');";
-       $db->insert($query2);
+    protected function getSpecificAttributesInJSON():string{
+        return json_encode(['height' => $this->height, 'width' => $this->width, 'length' => $this->length]);
     }
-
-
 }
