@@ -107,7 +107,16 @@ abstract class Product {
         }
         return $products;
     }
-    static public function deleteProductById($db, $product_id){
+    
+    static public function deleteCheckedProducts($db, $checked_products){
+        if (!empty($checked_products)){
+                    foreach ($checked_products as $product_id){
+                        Product::deleteProductById($db, $product_id);
+                    }
+                    header("Location: index.php");
+                }
+    }
+    static private function deleteProductById($db, $product_id){
         $query1 = "DELETE FROM `ProductType`"
                 . "WHERE product_id = ".$product_id.";";
         $db->delete($query1);
@@ -126,16 +135,38 @@ abstract class Product {
        $query_select = "SELECT type_id FROM Type WHERE name = '".$this->getClassName()."';";
        return $db->select($query_select)->fetch_row()[0];
     }
-
-    public function addProductToDB($db){
-       $spec_attributes = $this->getSpecificAttributesInJSON();
-       $query_insert = "INSERT INTO `Product` (`sku`, `name`, `price`, `spec_attributes`)"
-              . "VALUES ('$this->sku', '$this->name', '$this->price', '$spec_attributes');";
-       $product_id = $db->insert($query_insert);
-       $type_id = $this->getTypeId($db);
-       $query_insert = "INSERT INTO `ProductType` (`product_id`, `type_id`) "
-              . "VALUES ('$product_id', '$type_id');";
-       $db->insert($query_insert);
+    
+    static public function saveProduct($db, $rows){
+        $typeswitcher = $rows['typeswitcher'];
+        if (!empty($typeswitcher)){
+            $name = $rows['name'];
+            $sku = $rows['sku'];
+            $price = $rows['price'];
+            $type = "classes\\".$typeswitcher;
+            try
+            {
+                $product = new $type($name, $sku, $price);
+                $product->setSpecificAttributes($rows);
+                $product->addProductToDB($db);
+                echo json_encode(['code'=>'200', 'msg'=>'success']);
+            }
+            catch(\Exception $e){
+                echo json_encode(['code'=>'404', 'msg'=>$e->getMessage()]);
+            }
+        }
+        else{
+           echo json_encode(['code'=>'404', 'msg'=>'Please, submit required data']); 
+        }
+    }
+    private function addProductToDB($db){
+        $spec_attributes = $this->getSpecificAttributesInJSON();
+        $query_insert = "INSERT INTO `Product` (`sku`, `name`, `price`, `spec_attributes`)"
+                       . "VALUES ('".$this->sku."', '".$this->name."', '".$this->price."', '$spec_attributes');";
+        $product_id = $db->insert($query_insert);
+        $type_id = $this->getTypeId($db);
+        $query_insert = "INSERT INTO `ProductType` (`product_id`, `type_id`) "
+                       . "VALUES ('$product_id', '$type_id');";
+        $db->insert($query_insert);
     }
     
     public function showProduct(){
