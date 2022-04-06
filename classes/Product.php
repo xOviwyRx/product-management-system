@@ -137,14 +137,16 @@ abstract class Product {
     }
     
     static public function saveProduct($db, $rows){
-        $typeswitcher = $rows['typeswitcher'];
-        if (!empty($typeswitcher)){
+        
+        if (!empty($rows['typeswitcher'])){
+            $typeswitcher = $rows['typeswitcher'];
             $name = $rows['name'];
             $sku = $rows['sku'];
             $price = $rows['price'];
-            $type = "classes\\".$typeswitcher;
+            
             try
-            {
+            {   
+                $type = "classes\\".$typeswitcher;
                 $product = new $type($name, $sku, $price);
                 $product->setSpecificAttributes($rows);
                 $product->addProductToDB($db);

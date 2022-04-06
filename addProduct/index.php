@@ -9,7 +9,7 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/header.php';
             </div>
             <hr>
             
-            <form class="mt-4" style="width:500px" method = "post" action="./submit.php" id = "product_form">
+            <form class="mt-4" style="width:500px" method = "post" action="submit.php" id = "product_form">
                 <div class="alert alert-danger display-error" style="display: none" id="error-valid">
                 </div>
                 <div class="row mb-3">
@@ -38,7 +38,7 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/header.php';
                     <label class="col-form-label col-sm-4" for="typeswitcher" id="typeswitcher">Type Switcher</label>
                     <div class="col-sm-5 select_box">
                         <select style="height:40px;" class="form-control" name = "typeswitcher" id="productType">
-                            <option value ="" disabled>Type Switcher</option>
+                            <option value ="" disabled selected>Type Switcher</option>
                             <option value = "DVD" id="DVD">DVD</option>
                             <option value = "Book" id="Book">Book</option>
                             <option value = "Furniture" id="Furniture">Furniture</option>
@@ -93,31 +93,4 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/header.php';
        
     </body>
     <script src="../js/addProduct/main.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function() {
-
-            $('#product_form').submit(function(e){
-              e.preventDefault();
-              
-              $.ajax({
-                  type: "POST",
-                  dataType: "json",
-                  data: $(this).serialize(),
-                  url: $(this).attr('action'),
-                  success: function(data){
-                      if (data.code === "404"){
-                           $("#error-valid").html("<p>"+data.msg+"</p>");
-                           $("#error-valid").css("display","block");
-                      }
-                      else
-                      {
-                          location.href = "/index.php";  
-                      }      
-                  }
-                  
-              });
-            });
-           return false;
-        });
-    </script>
 </html>

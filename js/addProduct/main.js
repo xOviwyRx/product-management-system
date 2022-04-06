@@ -11,17 +11,17 @@ window.onload = function(){
 
 var el = document.getElementById("productType");
 el.addEventListener("change", function() {
-  var elems = document.querySelectorAll('#noDVD,#noBook,#noFurniture');
-  for (var i = 0; i < elems.length; i++) {
-    elems[i].style.display = 'none';
-  }
-  if (this.selectedIndex === 1) {
-    document.querySelector('#noDVD').style.display = 'flex';
-  } else if (this.selectedIndex === 2) {
-    document.querySelector('#noBook').style.display = 'flex';
-  }else if (this.selectedIndex === 3) {
-    document.querySelector('#noFurniture').style.display = 'block';
-  }
+var elems = document.querySelectorAll('#noDVD,#noBook,#noFurniture');
+for (var i = 0; i < elems.length; i++) {
+  elems[i].style.display = 'none';
+}
+if (this.selectedIndex === 1) {
+  document.querySelector('#noDVD').style.display = 'flex';
+} else if (this.selectedIndex === 2) {
+  document.querySelector('#noBook').style.display = 'flex';
+}else if (this.selectedIndex === 3) {
+  document.querySelector('#noFurniture').style.display = 'block';
+}
 }, false); 
 
 $(document).ready(function() {
@@ -29,7 +29,6 @@ $(document).ready(function() {
             $('#submit').click(function(e){
               e.preventDefault();
               var form = $("#product_form");
-              
               $.ajax({
                   type: "POST",
                   dataType: "json",
@@ -49,5 +48,5 @@ $(document).ready(function() {
               });
             });
            return false;
-        });
+});
 
