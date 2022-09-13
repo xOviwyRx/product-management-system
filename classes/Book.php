@@ -9,7 +9,6 @@ namespace classes;
  */
 class Book extends Product{
     private $weight;
-//    protected const TYPE_ID = 2;
     public function getWeight(): float {
         return $this->weight;
     }

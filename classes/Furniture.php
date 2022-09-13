@@ -11,7 +11,6 @@ class Furniture extends Product{
     private $width;
     private $height;
     private $length;
-//    protected const TYPE_ID = 3;
     
     public function getWidth(): float {
         return $this->width;

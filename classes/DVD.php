@@ -9,7 +9,6 @@ namespace classes;
  */
 class DVD extends Product{
     private $size;
-//    protected const TYPE_ID = 1;
     public function getSize(): int {
         return $this->size;
     }

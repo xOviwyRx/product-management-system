@@ -94,16 +94,10 @@ abstract class Product {
            $product_id = $row['product_id'];
            $className = "classes\\".$row['type'];
            $spec_attributes = json_decode($row['spec_attributes'], true);
-           
-//           try{
            $product = new $className($name, $sku, $price);
            $product->setSpecificAttributes($spec_attributes);
            $product->setProductId($product_id);
            $products[] = $product; 
-//           }
-//           catch (Exception $e){
-//               echo $e;
-//           }
         }
         return $products;
     }

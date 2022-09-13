@@ -27,12 +27,7 @@ class Database{
     
     public function select($query){
         $result = $this->link->query($query) or die($this->link->error.__LINE__);
-//        if ($result->num_rows > 0){
-//            return $result;
-//        } else {
-//            return false;
         return $result;
-//        }
     }
     
     public function insert($query) : string{
