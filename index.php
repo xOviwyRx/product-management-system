@@ -44,7 +44,6 @@ require_once 'header.php';
             </form>
             
             </section>
-          <!--</div>--> 
        <?php 
         include "./footer.html";
         ?>    
