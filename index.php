@@ -25,15 +25,15 @@ require_once 'header.php';
             for ($i = 0; $i < sizeof($products); $i++){
                 $product = $products[$i];
                 ?>
-                 <label for='product<?php echo "${i}_input_checkbox" ?>'>
+                 <label for='product<?="${i}_input_checkbox"?>'>
                     <div class="mr-5 mt-3 border border-dark mb-4 p-3 pb-5" style="width: 230px">
                         <input name="checked_products[]" type="checkbox" class="delete-checkbox"
-                               value='<?php echo $product->getProductId()?>'
-                               id='product<?php echo "${i}_input_checkbox" ?>'/>
-                        <p class="text-center m-0"><?php echo $product->getSku() ?></p>
-                        <p class="text-center m-0"><?php echo $product->getName() ?></p>
-                        <p class="text-center m-0"><?php echo $product->getPrice()?> $</p>
-                        <p class="text-center m-0"><?php echo $product->getSpecificAttributes() ?></p>
+                               value='<?=$product->getProductId()?>'
+                               id='product<?="${i}_input_checkbox"?>'/>
+                        <p class="text-center m-0"><?=$product->getSku()?></p>
+                        <p class="text-center m-0"><?=$product->getName()?></p>
+                        <p class="text-center m-0"><?=$product->getPrice()?> $</p>
+                        <p class="text-center m-0"><?=$product->getSpecificAttributes()?></p>
                     </div>
                  </label>
                 <?php
