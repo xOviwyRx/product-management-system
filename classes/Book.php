@@ -2,11 +2,6 @@
 
 namespace classes;
 
-/**
- * Description of Book
- *
- * @author xoviwyrx
- */
 class Book extends Product{
     private $weight;
     public function getWeight(): float {
@@ -28,8 +23,8 @@ class Book extends Product{
     protected function getSpecificAttributesInJSON():string{
         return json_encode(['weight' => $this->weight]);
     }
-    
+
     public function getSpecificAttributes(): string {
-        return "Weight: ".$this->weight." KG";
+        return "Weight: $this->weight KG";
     }
 }

@@ -2,16 +2,11 @@
 
 namespace classes;
 
-/**
- * Description of Furniture
- *
- * @author xoviwyrx
- */
 class Furniture extends Product{
     private $width;
     private $height;
     private $length;
-    
+
     public function getWidth(): float {
         return $this->width;
     }
@@ -23,7 +18,7 @@ class Furniture extends Product{
     public function getLength(): float {
         return $this->length;
     }
-    
+
     public function setWidth(float $width): void {
         $this->width = $width;
     }
@@ -47,14 +42,14 @@ class Furniture extends Product{
                 || !$this->validNumberField($length)){
             throw new \Exception("Please, provide the data of indicated type");
         }
-        
+
         $this->height = (float)$heigth;
         $this->width = (float)$width;
         $this->length = (float)$length;
-        
+
     }
     public function getSpecificAttributes(): string {
-        return "Dimension: ".$this->height.'x'.$this->width.'x'.$this->length;
+        return "Dimension: {$this->height}x{$this->width}x{$this->length}";
     }
     protected function getSpecificAttributesInJSON():string{
         return json_encode(['height' => $this->height, 'width' => $this->width, 'length' => $this->length]);

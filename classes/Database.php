@@ -9,14 +9,14 @@ class Database{
     private $username = DB_USER;
     private $password = DB_PASS;
     private $db_name = DB_NAME;
-    
+
     public $link;
     public $error;
-    
+
     public function __construct(){
          $this->connect();
     }
-    
+
     private function connect(){
     $this->link = new mysqli($this->host, $this->username, $this->password, $this->db_name);
     if ($this->link->connect_error){
@@ -24,15 +24,15 @@ class Database{
         return false;
        }
     }
-    
+
     public function select($query){
         $result = $this->link->query($query) or die($this->link->error.__LINE__);
         return $result;
     }
-    
+
     public function insert($query) : string{
         $insert_row = $this->link->query($query) or die($this->link->error.__LINE__);
-        
+
         if (!$insert_row){
             die('Error : ('. $this->link->errno .') '. $this->link->error);
         }
@@ -41,10 +41,10 @@ class Database{
             return $this->link->insert_id;
         }
     }
-    
+
      public function update($query){
         $update_row = $this->link->query($query) or die($this->link->error.__LINE__);
-        
+
         if ($update_row){
             header("Location: index.php?msg=".urlencode('Record Updated'));
             exit();
@@ -52,7 +52,7 @@ class Database{
             die('Error : ('. $this->link->errno .') '. $this->link->error);
         }
     }
-    
+
     public function delete($query){
         $delete_row = $this->link->query($query) or die($this->link->error.__LINE__);
         if (!$delete_row){
@@ -60,7 +60,3 @@ class Database{
         }
     }
 }
-    
-
-
-

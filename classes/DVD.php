@@ -2,11 +2,6 @@
 
 namespace classes;
 
-/**
- * Description of DVDDisk
- *
- * @author xoviwyrx
- */
 class DVD extends Product{
     private $size;
     public function getSize(): int {
@@ -26,10 +21,9 @@ class DVD extends Product{
         $this->size = (float)$size;
     }
     public function getSpecificAttributes(): string {
-        return "Size: ".$this->size." MB";
+        return "Size: $this->size MB";
     }
     protected function getSpecificAttributesInJSON():string{
         return json_encode(['size' => $this->size]);
     }
 }
-

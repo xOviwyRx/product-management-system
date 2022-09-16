@@ -2,13 +2,13 @@
 $title = "Product Add";
 $form_id = "product_form";
 require_once $_SERVER['DOCUMENT_ROOT'].'/header.php';
-?> 
+?>
                     <button class="mr-4 btn btn-outline-dark" form ="product_form" id="submit" type="submit" name="save">Save</button>
                     <button class="mr-4 btn btn-outline-dark" onclick="window.location.href='/index.php'">Cancel</button>
                 </div> 
             </div>
             <hr>
-            
+
             <form class="mt-4" style="width:500px" method = "post" action="submit.php" id = "product_form">
                 <div class="alert alert-danger display-error" style="display: none" id="error-valid">
                 </div>
@@ -55,7 +55,7 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/header.php';
                 </div>
                 <div class="row mb-3" id="noBook">
                     <label class="col-form-label col-sm-3" for="weight">Weight (KG)</label>
-                    <div class="col-sm-9">    
+                    <div class="col-sm-9">
                         <input class="form-control" placeholder="0.0" name="weight" id="weight"/>
                         <p class="mt-3">Please, provide weight</p>
                     </div>
@@ -65,7 +65,7 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/header.php';
                         <label class="col-form-label col-sm-3" for="height">Height (CM)</label>
                         <div class="col-sm-9">
                             <input class="form-control" placeholder="0.0"  name="height" id ="height" />
-                        
+
                         </div>
                     </div>
                     <div class="row mb-3">
@@ -80,17 +80,17 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/header.php';
                             <input class="form-control" name="length" id ="length" placeholder="0.0"/>
                             <p class="mt-3">Please, provide dimensions</p>
                         </div>
-                        
-                    </div> 
+
+                    </div>
                 </div>
         </form>
-            
+
             </section>
-                <?php 
+                <?php
        include "../footer.html";
        ?>
-       </div>  
-       
+       </div>
+
     </body>
     <script src="../js/addProduct/main.js"></script>
 </html>
