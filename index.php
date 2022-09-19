@@ -22,7 +22,7 @@ require_once 'header.php';
             $products = classes\Product::getAllProductsFromDB($db);
             $checked_records = array();
 
-            for ($i = 0; $i < sizeof($products); $i++){
+            for ($i = 0; $i < sizeof($products); $i++):
                 $product = $products[$i];
                 ?>
                  <label for='product<?="${i}_input_checkbox"?>'>
@@ -37,7 +37,7 @@ require_once 'header.php';
                     </div>
                  </label>
                 <?php
-            }
+            endfor;
             ?>
                     </div>
                 </div>
