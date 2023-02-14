@@ -34,7 +34,8 @@ class Database{
         $insert_row = $this->link->query($query);
 
         if (!$insert_row){
-            $error_description = strstr($this->link->error, "Duplicate entry") ? "Product with specified SKU already exists in the database." : $this->link->error;
+            $error = $this->link->error;
+            $error_description = strstr($error, "Duplicate entry") ? "Product with specified SKU already exists in the database." : $error;
             throw new \Exception($error_description);
         }
         else
