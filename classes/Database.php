@@ -42,17 +42,6 @@ class Database{
         }
     }
 
-     public function update($query){
-        $update_row = $this->link->query($query) or die($this->link->error.__LINE__);
-
-        if ($update_row){
-            header("Location: index.php?msg=".urlencode('Record Updated'));
-            exit();
-        } else{
-            die('Error : ('. $this->link->errno .') '. $this->link->error);
-        }
-    }
-
     public function delete($query){
         $delete_row = $this->link->query($query) or die($this->link->error.__LINE__);
         if (!$delete_row){
