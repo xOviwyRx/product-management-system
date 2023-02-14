@@ -34,6 +34,12 @@
                         if (data.code !== "200"){
                              $("#error-valid").html("<p>"+data.msg+"</p>");
                              $("#error-valid").css("display","block");
+                             
+                              if (data.msg.includes("SKU")){
+                                 var sku_input = $("#sku");
+                                 sku_input.addClass('border-danger');
+                                 sku_input.removeClass('border-dark');
+                             }
                         }
                         else
                         {

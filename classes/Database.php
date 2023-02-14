@@ -34,7 +34,8 @@ class Database{
         $insert_row = $this->link->query($query);
 
         if (!$insert_row){
-            throw new \Exception("New product could not be created: " . $this->link->error);
+            $error_description = strstr($this->link->error, "Duplicate entry") ? "Product with specified SKU already exists in the database." : $this->link->error;
+            throw new \Exception($error_description);
         }
         else
         {
