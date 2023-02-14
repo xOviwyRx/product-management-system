@@ -141,11 +141,11 @@ abstract class Product {
                 echo json_encode(['code'=>'200', 'msg'=>'success']);
             }
             catch(\Exception $e){
-                echo json_encode(['code'=>'404', 'msg'=>$e->getMessage()]);
+                echo json_encode(['code'=>$e->getCode(), 'msg'=>$e->getMessage()]);
             }
         }
         else{
-           echo json_encode(['code'=>'404', 'msg'=>'Please, submit required data']);
+           echo json_encode(['code'=>$e->getCode(), 'msg'=>'Please, submit required data']);
         }
     }
     private function addProductToDB($db){
@@ -157,10 +157,6 @@ abstract class Product {
         $query_insert = "INSERT INTO `ProductType` (`product_id`, `type_id`) "
                        . "VALUES ('$product_id', '$type_id');";
         $db->insert($query_insert);
-    }
-
-    public function showProduct(){
-
     }
 
 }

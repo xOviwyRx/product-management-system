@@ -31,10 +31,10 @@ class Database{
     }
 
     public function insert($query) : string{
-        $insert_row = $this->link->query($query) or die($this->link->error.__LINE__);
+        $insert_row = $this->link->query($query);
 
         if (!$insert_row){
-            die('Error : ('. $this->link->errno .') '. $this->link->error);
+            throw new \Exception("New product could not be created: " . $this->link->error);
         }
         else
         {

@@ -31,7 +31,7 @@
                     data: form.serialize(),
                     url: form.attr('action'),
                     success: function(data){
-                        if (data.code === "404"){
+                        if (data.code !== "200"){
                              $("#error-valid").html("<p>"+data.msg+"</p>");
                              $("#error-valid").css("display","block");
                         }
