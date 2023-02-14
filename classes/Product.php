@@ -141,11 +141,11 @@ abstract class Product {
                 echo json_encode(['code'=>'200', 'msg'=>'success']);
             }
             catch(\Exception $e){
-                echo json_encode(['code'=>$e->getCode(), 'msg'=>$e->getMessage()]);
+                echo json_encode(['code'=>$e->getCode, 'msg'=>$e->getMessage()]);
             }
         }
         else{
-           echo json_encode(['code'=>$e->getCode(), 'msg'=>'Please, submit required data']);
+           echo json_encode(['code'=>'404', 'msg'=>'Please, submit required data']);
         }
     }
     private function addProductToDB($db){
