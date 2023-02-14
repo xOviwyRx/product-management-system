@@ -18,7 +18,6 @@ hr{
 
 #product_form input, select{
     border-width: 3px !important;
-    border-color: black !important;
 }
 .select_box{
     font-weight: bold !important;

@@ -45,3 +45,24 @@
               });
              return false;
   });
+  
+  function matchPattern(pattern, string){
+    if (pattern === null) { return true; }
+    regex = new RegExp(pattern);
+    return regex.test(string);
+}
+  
+  function validatefilledIn() {
+    var arr = document.getElementsByClassName('form-control');
+    for(var i=0; i<arr.length; i++){
+        if(arr[i].value === "" || !matchPattern(arr[i].getAttribute("pattern"),arr[i].value)) {
+            arr[i].classList.remove('border-dark');
+            arr[i].classList.add('border-danger');
+        } else {
+            arr[i].classList.remove('border-danger');
+            arr[i].classList.add('border-dark');
+        }
+    }
+} 
+
+
