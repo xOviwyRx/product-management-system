@@ -61,7 +61,7 @@
   function validatefilledIn() {
     var arr = document.getElementsByClassName('form-control');
     for(var i=0; i<arr.length; i++){
-        if(arr[i].value === "" || !matchPattern(arr[i].getAttribute("pattern"),arr[i].value)) {
+        if(arr[i].value.trim() === "" || !matchPattern(arr[i].getAttribute("pattern"),arr[i].value)) {
             arr[i].classList.remove('border-dark');
             arr[i].classList.add('border-danger');
         } else {

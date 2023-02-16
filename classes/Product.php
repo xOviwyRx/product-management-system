@@ -10,8 +10,10 @@ abstract class Product {
     protected $price;
     protected $product_id;
 
-    public function __construct(string $name, string $sku, string $price) {
-
+    public function __construct(string $raw_name, string $raw_sku, string $price) {
+        
+        $name = trim($raw_name);
+        $sku = trim($raw_sku);
         if (empty($name) || empty($sku) || empty($price)){
             throw new \Exception("Please, submit required data");
         }
@@ -19,8 +21,8 @@ abstract class Product {
             throw new \Exception("Please, provide the data of indicated type");
         }
 
-        $this->name = $name;
-        $this->sku = $sku;
+        $this->name = htmlspecialchars($name);
+        $this->sku = htmlspecialchars($sku);
         $this->price = $price;
     }
 
