@@ -16,10 +16,6 @@ class Database{
 
     public function __construct(){
          $this->connect();
-         if (empty($this->error)){
-             $this->pst = $this->link->prepare("INSERT INTO `Product`"
-                                      . " (`sku`, `name`, `price`, `spec_attributes`) VALUES (?, ?, ?, ?);");
-         }
     }
 
     private function connect(){
@@ -27,6 +23,11 @@ class Database{
         if ($this->link->connect_error){
             $this->error = "Database connection fail: ".$this->link->connect_error;
         }
+    }
+    
+    public function setPreparedStatement(){
+        $this->pst = $this->link->prepare("INSERT INTO `Product`"
+                                      . " (`sku`, `name`, `price`, `spec_attributes`) VALUES (?, ?, ?, ?);");
     }
 
     public function select($query){
