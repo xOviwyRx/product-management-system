@@ -16,16 +16,17 @@ class Database{
 
     public function __construct(){
          $this->connect();
-         $this->pst = $this->link->prepare("INSERT INTO `Product`"
+         if (empty($this->error)){
+             $this->pst = $this->link->prepare("INSERT INTO `Product`"
                                       . " (`sku`, `name`, `price`, `spec_attributes`) VALUES (?, ?, ?, ?);");
+         }
     }
 
     private function connect(){
-    $this->link = new mysqli($this->host, $this->username, $this->password, $this->db_name);
-    if ($this->link->connect_error){
-        $this->error = "Connection fail: ".$this->link->connect_error;
-        return false;
-       }
+        $this->link = new mysqli($this->host, $this->username, $this->password, $this->db_name);
+        if ($this->link->connect_error){
+            $this->error = "Database connection fail: ".$this->link->connect_error;
+        }
     }
 
     public function select($query){
