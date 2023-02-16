@@ -145,7 +145,7 @@ abstract class Product {
                 echo json_encode(['code'=>'200', 'msg'=>'success']);
             }
             catch(\Exception $e){
-                echo json_encode(['code'=>$e->getCode, 'msg'=>$e->getMessage()]);
+                echo json_encode(['code'=>'500', 'msg'=>$e->getMessage()]);
             }
         }
         else{
