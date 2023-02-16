@@ -47,24 +47,7 @@ class Database{
         }
     }
 
-    public function insert($query) : string{
-        $insert_row = $this->link->query($query);
-
-        if (!$insert_row){
-            $error = $this->link->error;
-            $error_description = strstr($error, "Duplicate entry") ? "Product with specified SKU already exists in the database." : $error;
-            throw new \Exception($error_description);
-        }
-        else
-        {
-            return $this->link->insert_id;
-        }
-    }
-
-    public function delete($query){
-        $delete_row = $this->link->query($query) or die($this->link->error.__LINE__);
-        if (!$delete_row){
-            die('Error : ('. $this->link->errno .') '. $this->link->error);
-        }
+    public function do_query($query){
+        $this->link->query($query) or die($this->link->error.__LINE__);
     }
 }

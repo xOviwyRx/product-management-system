@@ -104,15 +104,17 @@ abstract class Product {
                     header("Location: index.php");
                 }
     }
+    
     static private function deleteProductById($db, $product_id){
         $query1 = "DELETE FROM `ProductType`"
                 . "WHERE product_id = $product_id;";
-        $db->delete($query1);
+        $db->do_query($query1);
 
         $query2 = "DELETE FROM `Product`"
                 . "WHERE product_id = $product_id;";
-        $db->delete($query2);
+        $db->do_query($query2);
     }
+    
     abstract protected function getSpecificAttributesInJSON() : string;
 
     public function getClassName():string{
@@ -155,7 +157,7 @@ abstract class Product {
         $type_id = $this->getTypeId($db);
         $query_insert = "INSERT INTO `ProductType` (`product_id`, `type_id`) "
                        . "VALUES ('$product_id', '$type_id');";
-        $db->insert($query_insert);
+        $db->do_query($query_insert);
     }
 
 }
