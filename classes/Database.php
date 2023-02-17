@@ -9,7 +9,6 @@ class Database{
     private $username = DB_USER;
     private $password = DB_PASS;
     private $db_name = DB_NAME;
-    private $pst;
 
     public $link;
     public $error;
@@ -25,27 +24,24 @@ class Database{
         }
     }
     
-    public function setPreparedStatement(){
-        $this->pst = $this->link->prepare("INSERT INTO `Product`"
-                                      . " (`sku`, `name`, `price`, `spec_attributes`) VALUES (?, ?, ?, ?);");
-    }
-
     public function select($query){
         $result = $this->link->query($query) or die($this->link->error.__LINE__);
         return $result;
     }
     
     public function addNewProductToDB($sku, $name, $price, $spec_attributes){
-        $this->pst->bind_param("ssss", $sku, $name, $price, $spec_attributes);
-        $insert_row = $this->pst->execute();
+        $pst = $this->link->prepare("INSERT INTO `Product`"
+                                      . " (`sku`, `name`, `price`, `spec_attributes`) VALUES (?, ?, ?, ?);");
+        $pst->bind_param("ssss", $sku, $name, $price, $spec_attributes);
+        $insert_row = $pst->execute();
         if (!$insert_row){  
-            $error = $this->pst->error;
+            $error = $pst->error;
             $error_description = strstr($error, "Duplicate entry") ? "Product with specified SKU already exists in the database." : $error;
             throw new \Exception($error_description);
         }
         else
         {
-            return $this->pst->insert_id;
+            return $pst->insert_id;
         }
     }
 
