@@ -14,49 +14,43 @@ class Database{
     public $error;
 
     public function __construct(){
-         $this->connect();
+        $this->connect();
+    }
+    
+    public function __destruct()
+    {
+        $this->link->close();
     }
 
     private function connect(){
-    $this->link = new mysqli($this->host, $this->username, $this->password, $this->db_name);
-    if ($this->link->connect_error){
-        $this->error = "Connection fail: ".$this->link->connect_error;
-        return false;
-       }
+        $this->link = new mysqli($this->host, $this->username, $this->password, $this->db_name);
+        if ($this->link->connect_error){
+            $this->error = "Database connection fail: ".$this->link->connect_error;
+        }
     }
-
+    
     public function select($query){
         $result = $this->link->query($query) or die($this->link->error.__LINE__);
         return $result;
     }
-
-    public function insert($query) : string{
-        $insert_row = $this->link->query($query) or die($this->link->error.__LINE__);
-
-        if (!$insert_row){
-            die('Error : ('. $this->link->errno .') '. $this->link->error);
+    
+    public function addNewProductToDB($sku, $name, $price, $spec_attributes){
+        $pst = $this->link->prepare("INSERT INTO `Product`"
+                                      . " (`sku`, `name`, `price`, `spec_attributes`) VALUES (?, ?, ?, ?);");
+        $pst->bind_param("ssss", $sku, $name, $price, $spec_attributes);
+        $insert_row = $pst->execute();
+        if (!$insert_row){  
+            $error = $pst->error;
+            $error_description = strstr($error, "Duplicate entry") ? "Product with specified SKU already exists in the database." : $error;
+            throw new \Exception($error_description);
         }
         else
         {
-            return $this->link->insert_id;
+            return $pst->insert_id;
         }
     }
 
-     public function update($query){
-        $update_row = $this->link->query($query) or die($this->link->error.__LINE__);
-
-        if ($update_row){
-            header("Location: index.php?msg=".urlencode('Record Updated'));
-            exit();
-        } else{
-            die('Error : ('. $this->link->errno .') '. $this->link->error);
-        }
-    }
-
-    public function delete($query){
-        $delete_row = $this->link->query($query) or die($this->link->error.__LINE__);
-        if (!$delete_row){
-            die('Error : ('. $this->link->errno .') '. $this->link->error);
-        }
+    public function do_query($query){
+        $this->link->query($query) or die($this->link->error.__LINE__);
     }
 }

@@ -12,7 +12,7 @@ if (!(empty($db->error))){
 <html>
     <head>
         <meta charset="UTF-8">
-        <title><?php echo $title ?></title>
+        <title><?=$title?></title>
         <link rel="stylesheet" type="text/css" href="/css/library/bootstrap.min.css" />
         <link rel="stylesheet" type="text/css" href="/css/main.css" />
         <script src="/js/library/bootstrap.min.js"></script>
@@ -25,6 +25,6 @@ if (!(empty($db->error))){
         <div class="flex-column container-fluid d-flex pt-5 pl-5 pr-5 min-vh-100">
           <section>
             <div class="d-flex justify-content-between pl-3 pr-3">
-                <p class="h2 ml-2 font-weight-bold"><?php echo $title ?></p>
+                <p class="h2 ml-2 font-weight-bold"><?=$title?></p>
                 <div class="align-self-center"> 
 

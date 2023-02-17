@@ -31,9 +31,15 @@
                     data: form.serialize(),
                     url: form.attr('action'),
                     success: function(data){
-                        if (data.code === "404"){
+                        if (data.code !== "200"){
                              $("#error-valid").html("<p>"+data.msg+"</p>");
                              $("#error-valid").css("display","block");
+                             
+                              if (data.msg.includes("SKU")){
+                                 var sku_input = $("#sku");
+                                 sku_input.addClass('border-danger');
+                                 sku_input.removeClass('border-dark');
+                             }
                         }
                         else
                         {
@@ -45,3 +51,24 @@
               });
              return false;
   });
+  
+  function matchPattern(pattern, string){
+    if (pattern === null) { return true; }
+    regex = new RegExp(pattern);
+    return regex.test(string);
+}
+  
+  function validatefilledIn() {
+    var arr = document.getElementsByClassName('form-control');
+    for(var i=0; i<arr.length; i++){
+        if(arr[i].value.trim() === "" || !matchPattern(arr[i].getAttribute("pattern"),arr[i].value)) {
+            arr[i].classList.remove('border-dark');
+            arr[i].classList.add('border-danger');
+        } else {
+            arr[i].classList.remove('border-danger');
+            arr[i].classList.add('border-dark');
+        }
+    }
+} 
+
+

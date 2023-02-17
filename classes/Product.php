@@ -10,8 +10,10 @@ abstract class Product {
     protected $price;
     protected $product_id;
 
-    public function __construct(string $name, string $sku, string $price) {
-
+    public function __construct(string $raw_name, string $raw_sku, string $price) {
+        
+        $name = trim($raw_name);
+        $sku = trim($raw_sku);
         if (empty($name) || empty($sku) || empty($price)){
             throw new \Exception("Please, submit required data");
         }
@@ -19,8 +21,8 @@ abstract class Product {
             throw new \Exception("Please, provide the data of indicated type");
         }
 
-        $this->name = $name;
-        $this->sku = $sku;
+        $this->name = htmlspecialchars($name);
+        $this->sku = htmlspecialchars($sku);
         $this->price = $price;
     }
 
@@ -104,15 +106,17 @@ abstract class Product {
                     header("Location: index.php");
                 }
     }
+    
     static private function deleteProductById($db, $product_id){
         $query1 = "DELETE FROM `ProductType`"
                 . "WHERE product_id = $product_id;";
-        $db->delete($query1);
+        $db->do_query($query1);
 
         $query2 = "DELETE FROM `Product`"
                 . "WHERE product_id = $product_id;";
-        $db->delete($query2);
+        $db->do_query($query2);
     }
+    
     abstract protected function getSpecificAttributesInJSON() : string;
 
     public function getClassName():string{
@@ -141,26 +145,21 @@ abstract class Product {
                 echo json_encode(['code'=>'200', 'msg'=>'success']);
             }
             catch(\Exception $e){
-                echo json_encode(['code'=>'404', 'msg'=>$e->getMessage()]);
+                echo json_encode(['code'=>'500', 'msg'=>$e->getMessage()]);
             }
         }
         else{
            echo json_encode(['code'=>'404', 'msg'=>'Please, submit required data']);
         }
     }
+    
     private function addProductToDB($db){
         $spec_attributes = $this->getSpecificAttributesInJSON();
-        $query_insert = "INSERT INTO `Product` (`sku`, `name`, `price`, `spec_attributes`)"
-                       . "VALUES ('$this->sku', '$this->name', '$this->price', '$spec_attributes');";
-        $product_id = $db->insert($query_insert);
+        $product_id = $db->addNewProductToDB($this->sku, $this->name, $this->price, $spec_attributes);
         $type_id = $this->getTypeId($db);
         $query_insert = "INSERT INTO `ProductType` (`product_id`, `type_id`) "
                        . "VALUES ('$product_id', '$type_id');";
-        $db->insert($query_insert);
-    }
-
-    public function showProduct(){
-
+        $db->do_query($query_insert);
     }
 
 }
