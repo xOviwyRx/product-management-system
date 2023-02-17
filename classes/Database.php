@@ -16,6 +16,11 @@ class Database{
     public function __construct(){
          $this->connect();
     }
+    
+      public function __destruct()
+    {
+       $this->link->close();
+    }
 
     private function connect(){
         $this->link = new mysqli($this->host, $this->username, $this->password, $this->db_name);
