@@ -14,12 +14,12 @@ class Database{
     public $error;
 
     public function __construct(){
-         $this->connect();
+        $this->connect();
     }
     
-      public function __destruct()
+    public function __destruct()
     {
-       $this->link->close();
+        $this->link->close();
     }
 
     private function connect(){
