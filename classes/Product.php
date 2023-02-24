@@ -26,7 +26,7 @@ abstract class Product {
         $this->price = $price;
     }
 
-    protected function validNumberField($number, $pattern = '/^[0-9]+(\.[0-9]{1})?$/') : bool {
+    protected function validNumberField(string $number, string $pattern = '/^[0-9]+(\.[0-9]{1})?$/') : bool {
         if (preg_match($pattern, $number)){
                 return true;
             }
@@ -53,17 +53,6 @@ abstract class Product {
         return $this->price;
     }
 
-    public function setSku($sku): void {
-        $this->sku = $sku;
-    }
-
-    public function setName($name): void {
-        $this->name = $name;
-    }
-
-    public function setPrice($price): void {
-        $this->price = $price;
-    }
     abstract public function setSpecificAttributes($row): void;
     abstract public function getSpecificAttributes(): string;
 
