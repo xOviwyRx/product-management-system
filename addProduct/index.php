@@ -9,8 +9,8 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/header.php';
             </div>
             <hr>
 
-            <form class="mt-4" style="width:500px" method = "post" action="submit.php" id = "product_form">
-                <div class="alert alert-danger display-error" style="display: none" id="error-valid">
+            <form class="mt-4" method = "post" action="submit.php" id = "product_form">
+                <div class="alert alert-danger display-error" id="error-valid">
                 </div>
                 <div class="row mb-3">
                     <label class="col-form-label col-sm-3" for="sku">SKU</label>

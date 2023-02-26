@@ -19,6 +19,15 @@ hr{
 #product_form input, select{
     border-width: 3px !important;
 }
+
+#product_form {
+    width:500px;
+}
+
+.product-box {
+    width: 230px;
+}
+
 .select_box{
     font-weight: bold !important;
 }
@@ -32,4 +41,5 @@ p{
 .alert{
     height: 45px;
     font-weight: bold;
+    display: none;
 }
