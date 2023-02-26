@@ -1,22 +1,24 @@
-body{
+body {
     font-weight: bold;
 }
-.border-dark{
+
+.border-dark {
     border-width: 3px !important;
 }
-hr{
+
+hr {
     height: 2px;
     background: black;
 }
 
-.btn, .btn:hover, .btn:active, .btn:link, .btn:visited{
+.btn, .btn:hover, .btn:active, .btn:link, .btn:visited {
     border-width: 3px !important;
     border-color: black !important;
     box-shadow: 3px 3px black !important;
     font-weight: bold;
 }
 
-#product_form input, select{
+#product_form input, select {
     border-width: 3px !important;
 }
 
@@ -28,13 +30,15 @@ hr{
     width: 230px;
 }
 
-.select_box{
+.select_box {
     font-weight: bold !important;
 }
+
 #noFurniture, #noBook, #noDVD {
   display:none;
 }
-p{
+
+p {
    word-wrap: break-word;
 }
 
