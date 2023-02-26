@@ -37,7 +37,7 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/header.php';
                 <div class="row mb-3">
                     <label class="col-form-label col-sm-4" for="typeswitcher" id="typeswitcher">Type Switcher</label>
                     <div class="col-sm-5 select_box">
-                        <select style="height:40px;" class="form-control border-dark" name = "typeswitcher" id="productType">
+                        <select class="form-control border-dark" name = "typeswitcher" id="productType">
                             <option value ="" disabled selected>Type Switcher</option>
                             <option value = "DVD" id="DVD">DVD</option>
                             <option value = "Book" id="Book">Book</option>
