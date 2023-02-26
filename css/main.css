@@ -34,6 +34,10 @@ hr {
     font-weight: bold !important;
 }
 
+#productType {
+    height:40px;    
+}
+
 #noFurniture, #noBook, #noDVD {
   display:none;
 }
