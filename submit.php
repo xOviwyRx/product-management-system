@@ -1,7 +1,7 @@
 <?php
 if (isset($_POST['checked_products'])){
-  include 'config/config.php';
-  require_once './classes/autoload.php';
+  require 'config/config.php';
+  require './classes/autoload.php';
   $db = new classes\Database();
   classes\Product::deleteCheckedProducts($db, $_POST['checked_products']);
 } else {

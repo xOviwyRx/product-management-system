@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <?php 
-include_once 'config/config.php';
+require_once 'config/config.php';
 require_once 'classes/autoload.php';
 
 $db = new classes\Database();
