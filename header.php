@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<?php 
+<?php
 require_once 'config/config.php';
-require_once 'classes/autoload.php';
+require_once 'autoload.php';
 
 $db = new classes\Database();
 if (!(empty($db->error))){
@@ -26,5 +26,4 @@ if (!(empty($db->error))){
           <section>
             <div class="d-flex justify-content-between pl-3 pr-3">
                 <p class="h2 ml-2 font-weight-bold"><?=$title?></p>
-                <div class="align-self-center"> 
-
+                <div class="align-self-center">
