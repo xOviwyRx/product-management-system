@@ -1,14 +1,15 @@
-<!DOCTYPE html>
 <?php
-require_once 'config/config.php';
-require_once 'autoload.php';
+  require 'config/config.php';
+  require 'autoload.php';
 
-$db = new classes\Database();
-if (!(empty($db->error))){
-    echo $db->error;
-    exit();
-}
+  $db = new classes\Database();
+  if (!(empty($db->error))){
+      echo $db->error;
+      exit();
+  }
 ?>
+
+<!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">
