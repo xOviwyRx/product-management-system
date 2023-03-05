@@ -1,8 +1,6 @@
 <?php
-
-$title = "Product List";
-$form_id = "list_form";
-require 'header.php';
+  $title = "Product List";
+  require 'header.php';
 ?>
 
                     <button class="mr-5 btn btn-outline-dark" name="ADD" value="ADD" type="button" onclick="window.location.href='/addProduct/'"> ADD

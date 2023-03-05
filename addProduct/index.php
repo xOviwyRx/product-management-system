@@ -1,11 +1,10 @@
 <?php
-$title = "Product Add";
-$form_id = "product_form";
-require $_SERVER['DOCUMENT_ROOT'].'/header.php';
+  $title = "Product Add";
+  require $_SERVER['DOCUMENT_ROOT'].'/header.php';
 ?>
                     <button class="mr-4 btn btn-outline-dark" form ="product_form" id="submit" type="submit" name="save" onclick="validatefilledIn()">Save</button>
                     <button class="mr-4 btn btn-outline-dark" onclick="window.location.href='/index.php'">Cancel</button>
-                </div> 
+                </div>
             </div>
             <hr>
 
