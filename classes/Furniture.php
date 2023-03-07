@@ -2,6 +2,9 @@
 
 namespace classes;
 
+use classes\exceptions\EmptyInputException;
+use classes\exceptions\InvalidInputException;
+
 class Furniture extends Product{
     private $width;
     private $height;
@@ -37,11 +40,11 @@ class Furniture extends Product{
     public function setLength($length): void {
         
         if (empty($length)) {
-            throw new \Exception("Please, submit required data");
+            throw new EmptyInputException();
         }
 
         if (!$this->validNumberField($length)) {
-            throw new \Exception("Please, provide the data of indicated type");
+            throw new InvalidInputException();
         }
         
         $this->length = (float)$length;

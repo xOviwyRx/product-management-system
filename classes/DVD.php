@@ -2,17 +2,20 @@
 
 namespace classes;
 
+use classes\exceptions\EmptyInputException;
+use classes\exceptions\InvalidInputException;
+
 class DVD extends Product{
     private $size;
 
     public function setSize($size): void {
 
         if (empty($size)) {
-            throw new \Exception("Please, submit required data");
+            throw new EmptyInputException();
         }
 
         if (!$this->validNumberField($size)) {
-            throw new \Exception("Please, provide the data of indicated type");
+            throw new InvalidInputException();
         }
 
         $this->size = (float)$size;

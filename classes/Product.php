@@ -2,6 +2,8 @@
 
 namespace classes;
 use classes\Database;
+use classes\exceptions\EmptyInputException;
+use classes\exceptions\InvalidInputException;
 
 abstract class Product {
 
@@ -20,11 +22,11 @@ abstract class Product {
         $sku = trim($raw_sku);
         
         if (empty($name) || empty($sku) || empty($price)) {
-            throw new \Exception("Please, submit required data");
+            throw new EmptyInputException();
         }
 
         if (!$this->validNumberField($price, '/^[0-9]+(\.[0-9]{1,2})?$/')) {
-            throw new \Exception("Please, provide the data of indicated type");
+            throw new InvalidInputException();
         }
 
         $this->name = htmlspecialchars($name);
@@ -139,7 +141,7 @@ abstract class Product {
             } catch(\Exception $e) {
                 echo json_encode(['code'=>'500', 'msg'=>$e->getMessage()]);
             }
-            
+
         } else {
            echo json_encode(['code'=>'404', 'msg'=>'Please, submit required data']);
         }
