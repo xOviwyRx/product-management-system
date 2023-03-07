@@ -56,14 +56,13 @@ abstract class Product {
     }
 
     static protected function getQueryAllRecords(): string {
-        $query = "SELECT sku, Product.name, price, spec_attributes, Type.name as type, Product.product_id
+        return "SELECT sku, Product.name, price, spec_attributes, Type.name as type, Product.product_id
                   FROM Product
                   INNER JOIN ProductType ON
                   Product.product_id = ProductType.product_id
                   INNER JOIN Type ON
                   ProductType.type_id = Type.type_id
                   ORDER BY Product.product_id";
-        return $query;
     }
 
     static public function getAllProductsFromDB(Database $db): array {
@@ -88,9 +87,11 @@ abstract class Product {
 
     static public function deleteCheckedProducts(Database $db, array $checked_products): void {
         if (!empty($checked_products)) {
+
             foreach ($checked_products as $product_id){
                 Product::deleteProductById($db, $product_id);
             }
+            
             header("Location: index.php");
         }
     }

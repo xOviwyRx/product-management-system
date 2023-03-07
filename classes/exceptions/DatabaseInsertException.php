@@ -3,6 +3,7 @@
 namespace classes\exceptions;
 
 class DatabaseInsertException extends \ErrorException{
+
     public function __construct($message, $code = 0) {
 
         if (strstr($message, "Duplicate entry")) {
@@ -11,4 +12,5 @@ class DatabaseInsertException extends \ErrorException{
 
         return parent::__construct($message, $code);
     }
+    
 }
