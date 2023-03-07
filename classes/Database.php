@@ -44,9 +44,6 @@ class Database{
 
         if (!$insert_row) {  
             throw new DatabaseInsertException($pst->error);
-            // $error = ;
-            // $error_description = strstr($error, "Duplicate entry") ? "Product with specified SKU already exists in the database." : $error;
-            // throw new \Exception($error_description);
         } else {
             return $pst->insert_id;
         }
