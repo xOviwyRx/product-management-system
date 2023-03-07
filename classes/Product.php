@@ -8,7 +8,7 @@ use classes\exceptions\InvalidInputException;
 abstract class Product {
 
     protected $sku, $name, $price, $product_id;
-    
+
     abstract public function getSpecificAttributes(): string;
     abstract protected function getSpecificAttributesInJSON(): string;
     abstract public function setSpecificAttributes(array $row): void;
@@ -32,12 +32,7 @@ abstract class Product {
     }
 
     protected function validNumberField(string $number, string $pattern = '/^[0-9]+(\.[0-9]{1})?$/'): bool {
-
-        if (preg_match($pattern, $number)) {
-                return true;
-            }
-
-        return false;
+        return preg_match($pattern, $number);
     }
 
     public function getSku(): string {
@@ -60,7 +55,7 @@ abstract class Product {
         return $this->product_id;
     }
 
-    static protected function getQueryAllRecords(): string{
+    static protected function getQueryAllRecords(): string {
         $query = "SELECT sku, Product.name, price, spec_attributes, Type.name as type, Product.product_id
                   FROM Product
                   INNER JOIN ProductType ON
@@ -71,7 +66,7 @@ abstract class Product {
         return $query;
     }
 
-    static public function getAllProductsFromDB(Database $db): array{
+    static public function getAllProductsFromDB(Database $db): array {
         $query = Product::getQueryAllRecords();
         $records = $db->select($query);
         $products = array();
