@@ -6,13 +6,7 @@ use classes\exceptions\DatabaseInsertException;
 use mysqli;
 
 class Database{
-    public $host = DB_HOST;
-    private $username = DB_USER;
-    private $password = DB_PASS;
-    private $db_name = DB_NAME;
-
-    public $link;
-    public $error;
+    public $link, $error;
 
     public function __construct(){
         $this->connect();
@@ -24,15 +18,15 @@ class Database{
     }
 
     private function connect(): void {
-        $this->link = new mysqli($this->host, $this->username, $this->password, $this->db_name);
+        $this->link = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
         if ($this->link->connect_error) {
-            $this->error = "Database connection fail: ".$this->link->connect_error;
+            $this->error = "Database connection fail: " . $this->link->connect_error;
         }
     }
     
     public function select(string $query) {
-        $result = $this->link->query($query) or die($this->link->error.__LINE__);
+        $result = $this->link->query($query) or die($this->link->error . __LINE__);
         return $result;
     }
     
@@ -50,6 +44,6 @@ class Database{
     }
 
     public function do_query(string $query): void {
-        $this->link->query($query) or die($this->link->error.__LINE__);
+        $this->link->query($query) or die($this->link->error . __LINE__);
     }
 }

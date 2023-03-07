@@ -7,11 +7,8 @@ use classes\exceptions\InvalidInputException;
 
 abstract class Product {
 
-    protected $sku;
-    protected $name;
-    protected $price;
-    protected $product_id;
-
+    protected $sku, $name, $price, $product_id;
+    
     abstract public function getSpecificAttributes(): string;
     abstract protected function getSpecificAttributesInJSON(): string;
     abstract public function setSpecificAttributes(array $row): void;

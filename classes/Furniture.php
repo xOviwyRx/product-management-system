@@ -6,9 +6,7 @@ use classes\exceptions\EmptyInputException;
 use classes\exceptions\InvalidInputException;
 
 class Furniture extends Product{
-    private $width;
-    private $height;
-    private $length;
+    private $width, $height, $length;
 
     public function setWidth($width): void {
 
