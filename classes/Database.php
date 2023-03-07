@@ -22,19 +22,19 @@ class Database{
         $this->link->close();
     }
 
-    private function connect(){
+    private function connect(): void {
         $this->link = new mysqli($this->host, $this->username, $this->password, $this->db_name);
         if ($this->link->connect_error){
             $this->error = "Database connection fail: ".$this->link->connect_error;
         }
     }
     
-    public function select($query){
+    public function select(string $query) {
         $result = $this->link->query($query) or die($this->link->error.__LINE__);
         return $result;
     }
     
-    public function addNewProductToDB($sku, $name, $price, $spec_attributes){
+    public function addNewProductToDB(string $sku, string $name, string $price, string $spec_attributes): int {
         $pst = $this->link->prepare("INSERT INTO `Product`"
                                       . " (`sku`, `name`, `price`, `spec_attributes`) VALUES (?, ?, ?, ?);");
         $pst->bind_param("ssss", $sku, $name, $price, $spec_attributes);
@@ -50,7 +50,7 @@ class Database{
         }
     }
 
-    public function do_query($query){
+    public function do_query(string $query): void {
         $this->link->query($query) or die($this->link->error.__LINE__);
     }
 }

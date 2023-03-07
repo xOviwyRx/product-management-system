@@ -1,7 +1,7 @@
 <?php
 
 namespace classes;
-
+use classes\Database;
 
 abstract class Product {
 
@@ -10,7 +10,11 @@ abstract class Product {
     protected $price;
     protected $product_id;
 
-    public function __construct(string $raw_name, string $raw_sku, string $price) {
+    abstract public function getSpecificAttributes(): string;
+    abstract protected function getSpecificAttributesInJSON(): string;
+    abstract public function setSpecificAttributes(array $row): void;
+
+    public function __construct(string $raw_name, string $raw_sku, $price) {
         
         $name = trim($raw_name);
         $sku = trim($raw_sku);
@@ -23,10 +27,10 @@ abstract class Product {
 
         $this->name = htmlspecialchars($name);
         $this->sku = htmlspecialchars($sku);
-        $this->price = $price;
+        $this->price = (float)$price;
     }
 
-    protected function validNumberField(string $number, string $pattern = '/^[0-9]+(\.[0-9]{1})?$/') : bool {
+    protected function validNumberField(string $number, string $pattern = '/^[0-9]+(\.[0-9]{1})?$/'): bool {
         if (preg_match($pattern, $number)){
                 return true;
             }
@@ -37,14 +41,6 @@ abstract class Product {
         return $this->sku;
     }
 
-    public function setProductId(int $product_id): void {
-        $this->product_id = $product_id;
-    }
-
-    public function getProductId(): int {
-        return $this->product_id;
-    }
-
     public function getName(): string {
         return $this->name;
     }
@@ -53,8 +49,13 @@ abstract class Product {
         return $this->price;
     }
 
-    abstract public function setSpecificAttributes($row): void;
-    abstract public function getSpecificAttributes(): string;
+    public function setProductId(int $product_id): void {
+        $this->product_id = $product_id;
+    }
+
+    public function getProductId(): int {
+        return $this->product_id;
+    }
 
     static protected function getQueryAllRecords(): string{
         $query = "SELECT sku, Product.name, price, spec_attributes, Type.name as type, Product.product_id
@@ -68,7 +69,7 @@ abstract class Product {
         return $query;
     }
 
-    static public function getAllProductsFromDB($db): array{
+    static public function getAllProductsFromDB(Database $db): array{
         $query = Product::getQueryAllRecords();
         $records = $db->select($query);
         $products = array();
@@ -77,7 +78,7 @@ abstract class Product {
            $sku = $row['sku'];
            $price = $row['price'];
            $product_id = $row['product_id'];
-           $class_name = "classes\\${row['type']}";
+           $class_name = "classes\\{$row['type']}";
            $spec_attributes = json_decode($row['spec_attributes'], true);
            $product = new $class_name($name, $sku, $price);
            $product->setSpecificAttributes($spec_attributes);
@@ -87,16 +88,16 @@ abstract class Product {
         return $products;
     }
 
-    static public function deleteCheckedProducts($db, $checked_products){
-        if (!empty($checked_products)){
-                    foreach ($checked_products as $product_id){
-                        Product::deleteProductById($db, $product_id);
-                    }
-                    header("Location: index.php");
-                }
+    static public function deleteCheckedProducts(Database $db, array $checked_products): void {
+        if (!empty($checked_products)) {
+            foreach ($checked_products as $product_id){
+                Product::deleteProductById($db, $product_id);
+            }
+            header("Location: index.php");
+        }
     }
     
-    static private function deleteProductById($db, $product_id){
+    static private function deleteProductById(Database $db, int $product_id): void {
         $query1 = "DELETE FROM `ProductType`"
                 . "WHERE product_id = $product_id;";
         $db->do_query($query1);
@@ -106,9 +107,8 @@ abstract class Product {
         $db->do_query($query2);
     }
     
-    abstract protected function getSpecificAttributesInJSON() : string;
 
-    public function getClassName():string{
+    public function getClassName() : string {
         $path = explode('\\', static::class);
         return array_pop($path);
     }
@@ -117,7 +117,7 @@ abstract class Product {
        return $db->select($query_select)->fetch_row()[0];
     }
 
-    static public function saveProduct($db, $rows){
+    static public function saveProduct(Database $db, array $rows): void {
 
         if (!empty($rows['typeswitcher'])){
             $typeswitcher = $rows['typeswitcher'];
@@ -142,7 +142,7 @@ abstract class Product {
         }
     }
     
-    private function addProductToDB($db){
+    private function addProductToDB(Database $db): void {
         $spec_attributes = $this->getSpecificAttributesInJSON();
         $product_id = $db->addNewProductToDB($this->sku, $this->name, $this->price, $spec_attributes);
         $type_id = $this->getTypeId($db);

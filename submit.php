@@ -1,5 +1,5 @@
 <?php
-if (isset($_POST['checked_products'])){
+if (isset($_POST['checked_products'])) {
   require 'config/config.php';
   require 'autoload.php';
   $db = new classes\Database();
