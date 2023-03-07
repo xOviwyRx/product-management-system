@@ -112,7 +112,8 @@ abstract class Product {
         $path = explode('\\', static::class);
         return array_pop($path);
     }
-    private function getTypeId($db):int{
+    
+    private function getTypeId(Database $db): int {
        $query_select = "SELECT type_id FROM Type WHERE name = '{$this->getClassName()}';";
        return $db->select($query_select)->fetch_row()[0];
     }
