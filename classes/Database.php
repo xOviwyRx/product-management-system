@@ -34,7 +34,7 @@ class Database{
         return $result;
     }
     
-    public function addNewProductToDB(string $sku, string $name, string $price, string $spec_attributes): int {
+    public function addNewProductToDB(string $sku, string $name, float $price, string $spec_attributes): int {
         $pst = $this->link->prepare("INSERT INTO `Product`"
                                       . " (`sku`, `name`, `price`, `spec_attributes`) VALUES (?, ?, ?, ?);");
         $pst->bind_param("ssss", $sku, $name, $price, $spec_attributes);
