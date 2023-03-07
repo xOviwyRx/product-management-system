@@ -2,6 +2,7 @@
 
 namespace classes;
 
+use classes\exceptions\DatabaseInsertException;
 use mysqli;
 
 class Database{
@@ -42,9 +43,10 @@ class Database{
         $insert_row = $pst->execute();
 
         if (!$insert_row) {  
-            $error = $pst->error;
-            $error_description = strstr($error, "Duplicate entry") ? "Product with specified SKU already exists in the database." : $error;
-            throw new \Exception($error_description);
+            throw new DatabaseInsertException($pst->error);
+            // $error = ;
+            // $error_description = strstr($error, "Duplicate entry") ? "Product with specified SKU already exists in the database." : $error;
+            // throw new \Exception($error_description);
         } else {
             return $pst->insert_id;
         }
