@@ -24,7 +24,8 @@ class Database{
 
     private function connect(): void {
         $this->link = new mysqli($this->host, $this->username, $this->password, $this->db_name);
-        if ($this->link->connect_error){
+
+        if ($this->link->connect_error) {
             $this->error = "Database connection fail: ".$this->link->connect_error;
         }
     }
@@ -39,13 +40,12 @@ class Database{
                                       . " (`sku`, `name`, `price`, `spec_attributes`) VALUES (?, ?, ?, ?);");
         $pst->bind_param("ssss", $sku, $name, $price, $spec_attributes);
         $insert_row = $pst->execute();
-        if (!$insert_row){  
+
+        if (!$insert_row) {  
             $error = $pst->error;
             $error_description = strstr($error, "Duplicate entry") ? "Product with specified SKU already exists in the database." : $error;
             throw new \Exception($error_description);
-        }
-        else
-        {
+        } else {
             return $pst->insert_id;
         }
     }

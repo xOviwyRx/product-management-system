@@ -18,10 +18,12 @@ abstract class Product {
         
         $name = trim($raw_name);
         $sku = trim($raw_sku);
-        if (empty($name) || empty($sku) || empty($price)){
+        
+        if (empty($name) || empty($sku) || empty($price)) {
             throw new \Exception("Please, submit required data");
         }
-        if (!$this->validNumberField($price, '/^[0-9]+(\.[0-9]{1,2})?$/')){
+
+        if (!$this->validNumberField($price, '/^[0-9]+(\.[0-9]{1,2})?$/')) {
             throw new \Exception("Please, provide the data of indicated type");
         }
 
@@ -31,9 +33,11 @@ abstract class Product {
     }
 
     protected function validNumberField(string $number, string $pattern = '/^[0-9]+(\.[0-9]{1})?$/'): bool {
-        if (preg_match($pattern, $number)){
+
+        if (preg_match($pattern, $number)) {
                 return true;
             }
+
         return false;
     }
 
@@ -64,8 +68,7 @@ abstract class Product {
                   Product.product_id = ProductType.product_id
                   INNER JOIN Type ON
                   ProductType.type_id = Type.type_id
-                  ORDER BY Product.product_id
-                  ";
+                  ORDER BY Product.product_id";
         return $query;
     }
 
@@ -73,7 +76,8 @@ abstract class Product {
         $query = Product::getQueryAllRecords();
         $records = $db->select($query);
         $products = array();
-        foreach ($records as $row){
+
+        foreach ($records as $row) {
            $name = $row['name'];
            $sku = $row['sku'];
            $price = $row['price'];
@@ -120,25 +124,23 @@ abstract class Product {
 
     static public function saveProduct(Database $db, array $rows): void {
 
-        if (!empty($rows['typeswitcher'])){
+        if (!empty($rows['typeswitcher'])) {
             $typeswitcher = $rows['typeswitcher'];
             $name = $rows['name'];
             $sku = $rows['sku'];
             $price = $rows['price'];
 
-            try
-            {
+            try {
                 $type = "classes\\$typeswitcher";
                 $product = new $type($name, $sku, $price);
                 $product->setSpecificAttributes($rows);
                 $product->addProductToDB($db);
                 echo json_encode(['code'=>'200', 'msg'=>'success']);
-            }
-            catch(\Exception $e){
+            } catch(\Exception $e) {
                 echo json_encode(['code'=>'500', 'msg'=>$e->getMessage()]);
             }
-        }
-        else{
+            
+        } else {
            echo json_encode(['code'=>'404', 'msg'=>'Please, submit required data']);
         }
     }

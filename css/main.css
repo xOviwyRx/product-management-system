@@ -46,7 +46,7 @@ p {
    word-wrap: break-word;
 }
 
-.alert{
+.alert {
     height: 45px;
     font-weight: bold;
     display: none;

@@ -7,11 +7,11 @@ class DVD extends Product{
 
     public function setSize($size): void {
 
-        if (empty($size)){
+        if (empty($size)) {
             throw new \Exception("Please, submit required data");
         }
 
-        if (!$this->validNumberField($size)){
+        if (!$this->validNumberField($size)) {
             throw new \Exception("Please, provide the data of indicated type");
         }
 

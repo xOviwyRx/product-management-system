@@ -3,7 +3,7 @@
   require 'autoload.php';
 
   $db = new classes\Database();
-  if (!(empty($db->error))){
+  if (!(empty($db->error))) {
       echo $db->error;
       exit();
   }

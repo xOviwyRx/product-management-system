@@ -20,13 +20,11 @@
         <div class="row">
             <?php
             //*Filling array products from the database*//
-
             $products = classes\Product::getAllProductsFromDB($db);
             $checked_records = array();
 
             for ($i = 0; $i < sizeof($products); $i++):
-            $product = $products[$i];
-            ?>
+                $product = $products[$i]; ?>
                 <label for='product<?="{$i}_input_checkbox"?>'>
                     <div class="mr-5 mt-3 border border-dark mb-4 p-3 pb-5 product-box">
                         <input name="checked_products[]" type="checkbox" class="delete-checkbox"
@@ -39,6 +37,7 @@
                     </div>
                 </label>
             <?php endfor;?>
+            
         </div>
     </div>
 </form>
