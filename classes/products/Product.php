@@ -120,7 +120,6 @@ abstract class Product {
 
         if (!empty($rows['typeswitcher'])) {
             $class_name = "classes\\products\\" . $rows['typeswitcher'];
-            $class_name = $rows['typeswitcher'];
             $name = $rows['name'];
             $sku = $rows['sku'];
             $price = $rows['price'];
