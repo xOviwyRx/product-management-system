@@ -1,6 +1,9 @@
 <?php
-  $title = "Product List";
-  require 'header.php';
+
+use classes\products\Product;
+
+$title = "Product List";
+require 'header.php';
 ?>
 
         <button class="mr-5 btn btn-outline-dark" 
@@ -20,7 +23,7 @@
         <div class="row">
             <?php
             //*Filling array products from the database*//
-            $products = classes\Product::getAllProductsFromDB($db);
+            $products = Product::getAllProductsFromDB($db);
             $checked_records = array();
 
             for ($i = 0; $i < sizeof($products); $i++):
@@ -37,7 +40,7 @@
                     </div>
                 </label>
             <?php endfor;?>
-            
+
         </div>
     </div>
 </form>

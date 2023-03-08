@@ -1,6 +1,6 @@
 <?php
 
-namespace classes;
+namespace classes\products;
 use classes\Database;
 use classes\exceptions\EmptyInputException;
 use classes\exceptions\InvalidInputException;
@@ -14,7 +14,6 @@ abstract class Product {
     abstract public function setSpecificAttributes(array $row): void;
 
     public function __construct(string $raw_name, string $raw_sku, $price) {
-        
         $name = trim($raw_name);
         $sku = trim($raw_sku);
         
@@ -75,7 +74,7 @@ abstract class Product {
            $sku = $row['sku'];
            $price = $row['price'];
            $product_id = $row['product_id'];
-           $class_name = "classes\\{$row['type']}";
+           $class_name = 'classes\\products\\' . $row['type'];
            $spec_attributes = json_decode($row['spec_attributes'], true);
            $product = new $class_name($name, $sku, $price);
            $product->setSpecificAttributes($spec_attributes);
@@ -120,14 +119,14 @@ abstract class Product {
     static public function saveProduct(Database $db, array $rows): void {
 
         if (!empty($rows['typeswitcher'])) {
-            $typeswitcher = $rows['typeswitcher'];
+            $class_name = "classes\\products\\" . $rows['typeswitcher'];
+            $class_name = $rows['typeswitcher'];
             $name = $rows['name'];
             $sku = $rows['sku'];
             $price = $rows['price'];
 
             try {
-                $type = "classes\\$typeswitcher";
-                $product = new $type($name, $sku, $price);
+                $product = new $class_name($name, $sku, $price);
                 $product->setSpecificAttributes($rows);
                 $product->addProductToDB($db);
                 echo json_encode(['code'=>'200', 'msg'=>'success']);

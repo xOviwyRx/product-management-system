@@ -1,6 +1,7 @@
 <?php
-  $title = "Product Add";
-  require $_SERVER['DOCUMENT_ROOT'].'/header.php';
+//Consider about DOCUMENT_ROOT? 
+$title = "Product Add";
+require $_SERVER['DOCUMENT_ROOT'].'/header.php';
 ?>
         <button class="mr-4 btn btn-outline-dark" 
                 form ="product_form" 

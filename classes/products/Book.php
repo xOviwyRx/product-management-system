@@ -1,6 +1,6 @@
 <?php
 
-namespace classes;
+namespace classes\products;
 
 use classes\exceptions\EmptyInputException;
 use classes\exceptions\InvalidInputException;
