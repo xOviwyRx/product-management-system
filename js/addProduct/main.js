@@ -58,7 +58,7 @@ $(document).ready(function() {
           $("#error-valid").html("<p>"+data.msg+"</p>");
           $("#error-valid").css("display","block");
           
-          if (data.msg.includes("SKU")){
+          if (data.code === 1) {
               var sku_input = $("#sku");
               sku_input.addClass('border-danger');
               sku_input.removeClass('border-dark');
