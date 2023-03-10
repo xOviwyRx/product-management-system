@@ -11,11 +11,11 @@ class Furniture extends Product{
     public function setWidth($width): void {
 
         if (empty($width)) {
-            throw new \Exception("Please, submit required data");
+            throw new EmptyInputException;
         }
 
         if (!$this->validNumberField($width)) {
-            throw new \Exception("Please, provide the data of indicated type");
+            throw new InvalidInputException;
         }
         
         $this->width = (float)$width;
@@ -25,11 +25,11 @@ class Furniture extends Product{
     public function setHeight($height): void {
 
         if (empty($height)) {
-            throw new \Exception("Please, submit required data");
+            throw new EmptyInputException;
         }
 
         if (!$this->validNumberField($height)) {
-            throw new \Exception("Please, provide the data of indicated type");
+            throw new InvalidInputException;
         }
         
         $this->height = (float)$height;
@@ -48,10 +48,10 @@ class Furniture extends Product{
         $this->length = (float)$length;
     }
 
-    public function setSpecificAttributes(array $row): void {
-        $this->setHeight($row['height']);
-        $this->setWidth($row['width']);
-        $this->setLength($row['length']);
+    protected function setSpecificAttributesFromPOST(): void {
+        $this->setHeight($_POST['height']);
+        $this->setWidth($_POST['width']);
+        $this->setLength($_POST['length']);
     }
 
     public function getSpecificAttributes(): string {

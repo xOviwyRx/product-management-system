@@ -21,8 +21,12 @@ class DVD extends Product{
         $this->size = (float)$size;
     }
 
-    public function setSpecificAttributes(array $row): void {
-        $this->setSize($row['size']);
+    protected function setSpecificAttributes($row = null): void {
+        if (is_null($row)) {
+            $this->setSize($_POST['size']);
+        } else {
+            $this->size = $row['size'];
+        }
     }
 
     public function getSpecificAttributes(): string {

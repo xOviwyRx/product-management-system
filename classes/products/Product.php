@@ -11,11 +11,11 @@ abstract class Product {
 
     abstract public function getSpecificAttributes(): string;
     abstract protected function getSpecificAttributesInJSON(): string;
-    abstract public function setSpecificAttributes(array $row): void;
+    abstract protected function setSpecificAttributes($row): void;
 
-    public function __construct(string $raw_name, string $raw_sku, $price) {
-        $name = trim($raw_name);
-        $sku = trim($raw_sku);
+    public function __construct(string $name, string $sku, $price) {
+        $name = trim($name);
+        $sku = trim($sku);
         
         if (empty($name) || empty($sku) || empty($price)) {
             throw new EmptyInputException();
@@ -25,8 +25,8 @@ abstract class Product {
             throw new InvalidInputException();
         }
 
-        $this->name = htmlspecialchars($name);
-        $this->sku = htmlspecialchars($sku);
+        $this->name = $name;
+        $this->sku = $sku;
         $this->price = (float)$price;
     }
 
@@ -35,11 +35,11 @@ abstract class Product {
     }
 
     public function getSku(): string {
-        return $this->sku;
+        return htmlspecialchars($this->sku);
     }
 
     public function getName(): string {
-        return $this->name;
+        return htmlspecialchars($this->name);
     }
 
     public function getPrice(): string {
@@ -65,20 +65,22 @@ abstract class Product {
     }
 
     static public function getAllProductsFromDB(Database $db): array {
-        $query = Product::getQueryAllRecords();
+        $query = self::getQueryAllRecords();
         $records = $db->select($query);
-        $products = array();
+        //where is fetch for your query???
+        $products = [];
 
         foreach ($records as $row) {
-           $name = $row['name'];
-           $sku = $row['sku'];
-           $price = $row['price'];
-           $product_id = $row['product_id'];
-           $class_name = 'classes\\products\\' . $row['type'];
-           $spec_attributes = json_decode($row['spec_attributes'], true);
-           $product = new $class_name($name, $sku, $price);
-           $product->setSpecificAttributes($spec_attributes);
-           $product->setProductId($product_id);
+           $products[] = self::createProductFromDB($row);
+        //    $name = $row['name'];
+        //    $sku = $row['sku'];
+        //    $price = $row['price'];
+        //    $product_id = $row['product_id'];
+        //    $class_name = 'classes\\products\\' . $row['type'];
+        //    $spec_attributes = json_decode($row['spec_attributes'], true);
+        //    $product = new $class_name($name, $sku, $price, $spec_attributes, $product_id);
+        //    $product->setSpecificAttributes($spec_attributes);
+        //    $product->setProductId($product_id);
            $products[] = $product;
         }
         return $products;
@@ -88,7 +90,7 @@ abstract class Product {
         if (!empty($checked_products)) {
 
             foreach ($checked_products as $product_id){
-                Product::deleteProductById($db, $product_id);
+                self::deleteProductById($db, $product_id);
             }
             
             header("Location: index.php");
@@ -97,11 +99,11 @@ abstract class Product {
     
     static private function deleteProductById(Database $db, int $product_id): void {
         $query1 = "DELETE FROM `ProductType`"
-                . "WHERE product_id = $product_id;";
+                . "WHERE product_id = '" . $product_id . "'";
         $db->do_query($query1);
 
         $query2 = "DELETE FROM `Product`"
-                . "WHERE product_id = $product_id;";
+                . "WHERE product_id = '" . $product_id . "'";
         $db->do_query($query2);
     }
     
@@ -116,17 +118,16 @@ abstract class Product {
        return $db->select($query_select)->fetch_row()[0];
     }
 
-    static public function saveProduct(Database $db, array $rows): void {
-
-        if (!empty($rows['typeswitcher'])) {
-            $class_name = "classes\\products\\" . $rows['typeswitcher'];
-            $name = $rows['name'];
-            $sku = $rows['sku'];
-            $price = $rows['price'];
+    static public function saveProduct(Database $db): void {
+        if (!empty($_POST['typeswitcher'])) {
+            $class_name = "classes\\products\\" . $_POST['typeswitcher'];
+            $name = $_POST['name'];
+            $sku = $_POST['sku'];
+            $price = $_POST['price'];
 
             try {
                 $product = new $class_name($name, $sku, $price);
-                $product->setSpecificAttributes($rows);
+                $product->setSpecificAttributesFromPOST();
                 $product->addProductToDB($db);
                 echo json_encode(['code'=>'200', 'msg'=>'success']);
             } catch (InvalidInputException $e) {

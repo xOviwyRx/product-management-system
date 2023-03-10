@@ -6,6 +6,7 @@ use classes\exceptions\DatabaseInsertException;
 use mysqli;
 
 class Database{
+    //rename $link variable
     public $link, $error;
 
     public function __construct(){
@@ -27,12 +28,14 @@ class Database{
     
     public function select(string $query) {
         $result = $this->link->query($query) or die($this->link->error . __LINE__);
+        //think about free result
+        //check result set (must be not false)
         return $result;
     }
     
     public function addNewProductToDB(string $sku, string $name, float $price, string $spec_attributes): int {
         $pst = $this->link->prepare("INSERT INTO `Product`"
-                                      . " (`sku`, `name`, `price`, `spec_attributes`) VALUES (?, ?, ?, ?);");
+                                      . " (`sku`, `name`, `price`, `spec_attributes`) VALUES (?, ?, ?, ?)");
         $pst->bind_param("ssss", $sku, $name, $price, $spec_attributes);
         $insert_row = $pst->execute();
 

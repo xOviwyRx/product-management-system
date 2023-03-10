@@ -21,8 +21,12 @@ class Book extends Product{
         $this->weight = $weight;
     }
     
-    public function setSpecificAttributes(array $row): void {
-        $this->setWeight($row['weight']);
+    protected function setSpecificAttributes($row = null): void {
+        if (is_null($row)){
+            $this->setWeight($_POST['weight']);
+        } else {
+            $this->weight = $row['weight'];
+        }
     }
 
     public function getSpecificAttributes(): string {
