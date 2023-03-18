@@ -5,48 +5,29 @@ namespace classes;
 use classes\exceptions\DatabaseInsertException;
 use mysqli;
 
-class Database{
-    //rename $link variable
-    public $link, $error;
+class Database
+{
+    public $connection;
 
-    public function __construct(){
+    public function __construct()
+    {
         $this->connect();
     }
-    
+
+    private function connect(): void
+    {
+        $this->connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
+        if ($this->connection->connect_error) {
+            $msg = "Database connection failed: ";
+            $msg .= $this->connection->connect_error;
+            $msg .= " (" . $this->connection->connect_errno . ")";
+            die($msg);
+        }
+    }
+
     public function __destruct()
     {
-        $this->link->close();
-    }
-
-    private function connect(): void {
-        $this->link = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-
-        if ($this->link->connect_error) {
-            $this->error = "Database connection fail: " . $this->link->connect_error;
-        }
-    }
-    
-    public function select(string $query) {
-        $result = $this->link->query($query) or die($this->link->error . __LINE__);
-        //think about free result
-        //check result set (must be not false)
-        return $result;
-    }
-    
-    public function addNewProductToDB(string $sku, string $name, float $price, string $spec_attributes): int {
-        $pst = $this->link->prepare("INSERT INTO `Product`"
-                                      . " (`sku`, `name`, `price`, `spec_attributes`) VALUES (?, ?, ?, ?)");
-        $pst->bind_param("ssss", $sku, $name, $price, $spec_attributes);
-        $insert_row = $pst->execute();
-
-        if (!$insert_row) {  
-            throw new DatabaseInsertException($pst->error);
-        } else {
-            return $pst->insert_id;
-        }
-    }
-
-    public function do_query(string $query): void {
-        $this->link->query($query) or die($this->link->error . __LINE__);
+        $this->connection->close();
     }
 }

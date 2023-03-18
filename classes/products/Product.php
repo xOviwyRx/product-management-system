@@ -1,151 +1,167 @@
 <?php
-
+///Think about separting private (with classes) and public directories(with html code)
 namespace classes\products;
+
+use NumberFormatter;
 use classes\Database;
 use classes\exceptions\EmptyInputException;
 use classes\exceptions\InvalidInputException;
 
-abstract class Product {
+abstract class Product
+{
 
     protected $sku, $name, $price, $product_id;
+    static protected $db;
 
-    abstract public function getSpecificAttributes(): string;
-    abstract protected function getSpecificAttributesInJSON(): string;
-    abstract protected function setSpecificAttributes($row): void;
+    static function setDatabase($database)
+    {
+        self::$db = $database->connection;
+    }
 
-    public function __construct(string $name, string $sku, $price) {
+    // Setters 
+    public function setName(string $name = ''): void
+    {
         $name = trim($name);
-        $sku = trim($sku);
-        
-        if (empty($name) || empty($sku) || empty($price)) {
+
+        if ($name === '') {
             throw new EmptyInputException();
         }
 
-        if (!$this->validNumberField($price, '/^[0-9]+(\.[0-9]{1,2})?$/')) {
+        $this->name = $name;
+    }
+
+    public function setSku(string $sku = ''): void
+    {
+        $sku = trim($sku);
+
+        if ($sku === '') {
+            throw new EmptyInputException();
+        }
+
+        $this->sku = $sku;
+    }
+
+    public function setPrice($price = ''): void
+    {
+        if ($price === '') {
+            throw new EmptyInputException();
+        } elseif (!$this->isValidNumberField($price, '/^[0-9]+(\.[0-9]{1,2})?$/')) {
             throw new InvalidInputException();
         }
 
-        $this->name = $name;
-        $this->sku = $sku;
         $this->price = (float)$price;
     }
 
-    protected function validNumberField(string $number, string $pattern = '/^[0-9]+(\.[0-9]{1})?$/'): bool {
-        return preg_match($pattern, $number);
-    }
-
-    public function getSku(): string {
-        return htmlspecialchars($this->sku);
-    }
-
-    public function getName(): string {
-        return htmlspecialchars($this->name);
-    }
-
-    public function getPrice(): string {
-        return $this->price;
-    }
-
-    public function setProductId(int $product_id): void {
+    public function setProductId(int $product_id): void
+    {
         $this->product_id = $product_id;
     }
 
-    public function getProductId(): int {
+    abstract public function setSpecificAttributes($row): void;
+    // END Setters 
+
+    // Getters
+    public function getSku(): string
+    {
+        return htmlspecialchars($this->sku);
+    }
+
+    public function getName(): string
+    {
+        return htmlspecialchars($this->name);
+    }
+
+    public function getPrice(): string
+    {
+        return $this->price . '$';
+    }
+
+    public function getProductId(): int
+    {
         return $this->product_id;
     }
 
-    static protected function getQueryAllRecords(): string {
-        return "SELECT sku, Product.name, price, spec_attributes, Type.name as type, Product.product_id
-                  FROM Product
-                  INNER JOIN ProductType ON
-                  Product.product_id = ProductType.product_id
-                  INNER JOIN Type ON
-                  ProductType.type_id = Type.type_id
-                  ORDER BY Product.product_id";
+    abstract public function getSpecificAttributes(): string;
+    // END Getters
+
+    // Validators
+    protected function isValidNumberField(string $number, string $pattern = '/^[0-9]+(\.[0-9]{1})?$/'): bool
+    {
+        return preg_match($pattern, $number);
     }
+    // END Validators
 
-    static public function getAllProductsFromDB(Database $db): array {
-        $query = self::getQueryAllRecords();
-        $records = $db->select($query);
-        //where is fetch for your query???
-        $products = [];
 
-        foreach ($records as $row) {
-           $products[] = self::createProductFromDB($row);
-        //    $name = $row['name'];
-        //    $sku = $row['sku'];
-        //    $price = $row['price'];
-        //    $product_id = $row['product_id'];
-        //    $class_name = 'classes\\products\\' . $row['type'];
-        //    $spec_attributes = json_decode($row['spec_attributes'], true);
-        //    $product = new $class_name($name, $sku, $price, $spec_attributes, $product_id);
-        //    $product->setSpecificAttributes($spec_attributes);
-        //    $product->setProductId($product_id);
-           $products[] = $product;
-        }
-        return $products;
-    }
-
-    static public function deleteCheckedProducts(Database $db, array $checked_products): void {
-        if (!empty($checked_products)) {
-
-            foreach ($checked_products as $product_id){
-                self::deleteProductById($db, $product_id);
+    //Maybe it will be better replace it by something else?
+    static protected function instantiate($record)
+    {
+        $object = new static;
+        foreach ($record as $property => $value) {
+            if (property_exists($object, $property)) {
+                $object->$property = $value;
             }
-            
+        }
+        return $object;
+    }
+
+    static private function selectAllProductsQuery(): string
+    {
+        return "SELECT p.product_id, p.sku, p.name, p.price, b.weight, d.size, f.length, f.height, f.width,
+                CASE
+                    WHEN d.product_id IS NOT NULL THEN 'DVD'
+                    WHEN f.product_id IS NOT NULL THEN 'Furniture'
+                    WHEN b.product_id IS NOT NULL THEN 'Book'
+                END
+                AS type
+                FROM products AS p
+                LEFT JOIN books AS b ON
+                p.product_id = b.product_id
+                LEFT JOIN dvds AS d ON
+                p.product_id = d.product_id
+                LEFT JOIN furniture AS f ON
+                p.product_id = f.product_id
+                ORDER BY p.product_id";
+    }
+
+    static public function all(): array
+    {
+        $sql = self::selectAllProductsQuery();
+        $result_set = self::$db->query($sql);
+        $product_objects = [];
+
+        while ($record = $result_set->fetch_assoc()) {
+            $class_name = 'classes\\products\\' . $record['type'];
+            $product_objects[] = $class_name::instantiate($record);
+        }
+
+        $result_set->free();
+        return $product_objects;
+    }
+
+    static public function deleteCheckedProducts($checked_products): void
+    {
+        // Please do binding to the objects !!!
+        if (!empty($checked_products)) {
+            $sql = "DELETE FROM products WHERE product_id = ?";
+            $pst = self::$db->prepare($sql);
+            foreach ($checked_products as $product_id) {
+                // do i need casting type here?
+                $param = (int)$product_id;
+                $pst->bind_param("i", $param);
+                $pst->execute();
+            }
+            $pst->close();
             header("Location: index.php");
         }
     }
-    
-    static private function deleteProductById(Database $db, int $product_id): void {
-        $query1 = "DELETE FROM `ProductType`"
-                . "WHERE product_id = '" . $product_id . "'";
-        $db->do_query($query1);
 
-        $query2 = "DELETE FROM `Product`"
-                . "WHERE product_id = '" . $product_id . "'";
-        $db->do_query($query2);
+    public function save()
+    {
+        $sql = "INSERT INTO products (name, sku, price) VALUES (?, ?, ?)";
+        $pst = self::$db->prepare($sql);
+        $pst->bind_param("sss", $this->name, $this->sku, $this->price);
+        $pst->execute();
+        $this->product_id = $pst->insert_id;
+        $pst->close();
     }
-    
-
-    public function getClassName() : string {
-        $path = explode('\\', static::class);
-        return array_pop($path);
-    }
-    
-    private function getTypeId(Database $db): int {
-       $query_select = "SELECT type_id FROM Type WHERE name = '{$this->getClassName()}';";
-       return $db->select($query_select)->fetch_row()[0];
-    }
-
-    static public function saveProduct(Database $db): void {
-        if (!empty($_POST['typeswitcher'])) {
-            $class_name = "classes\\products\\" . $_POST['typeswitcher'];
-            $name = $_POST['name'];
-            $sku = $_POST['sku'];
-            $price = $_POST['price'];
-
-            try {
-                $product = new $class_name($name, $sku, $price);
-                $product->setSpecificAttributesFromPOST();
-                $product->addProductToDB($db);
-                echo json_encode(['code'=>'200', 'msg'=>'success']);
-            } catch (InvalidInputException $e) {
-                echo json_encode(['code'=>$e->getCode(), 'msg'=>$e->getMessage()]);
-            }
-
-        } else {
-           echo json_encode(['code'=>'1', 'msg'=>'Please, submit required data']);
-        }
-    }
-    
-    private function addProductToDB(Database $db): void {
-        $spec_attributes = $this->getSpecificAttributesInJSON();
-        $product_id = $db->addNewProductToDB($this->sku, $this->name, $this->price, $spec_attributes);
-        $type_id = $this->getTypeId($db);
-        $query_insert = "INSERT INTO `ProductType` (`product_id`, `type_id`) "
-                       . "VALUES ('$product_id', '$type_id');";
-        $db->do_query($query_insert);
-    }
-
 }

@@ -5,36 +5,41 @@ namespace classes\products;
 use classes\exceptions\EmptyInputException;
 use classes\exceptions\InvalidInputException;
 
-class Book extends Product{
-    private $weight;
+class Book extends Product
+{
+    protected $weight;
 
-    public function setWeight($weight): void {
+    public function setWeight($weight): void
+    {
 
-        if (empty($weight)) {
+        if ($weight = '') {
             throw new EmptyInputException();
         }
 
-        if (!$this->validNumberField($weight)) {
+        if (!$this->isValidNumberField($weight)) {
             throw new InvalidInputException();
         }
-        
+
         $this->weight = $weight;
     }
-    
-    protected function setSpecificAttributes($row = null): void {
-        if (is_null($row)){
-            $this->setWeight($_POST['weight']);
-        } else {
-            $this->weight = $row['weight'];
-        }
+
+    public function setSpecificAttributes($row): void
+    {
+        $this->weight = $row['weight'];
     }
 
-    public function getSpecificAttributes(): string {
+    public function getSpecificAttributes(): string
+    {
         return "Weight: $this->weight KG";
     }
 
-    protected function getSpecificAttributesInJSON(): string {
-        return json_encode(['weight' => $this->weight]);
+    public function save()
+    {
+        parent::save();
+        $sql = "INSERT INTO books (product_id, weight) VALUES (?, ?)";
+        $pst = self::$db->prepare($sql);
+        $pst->bind_param("is", $this->product_id, $this->weight);
+        $pst->execute();
+        $pst->close();
     }
-
 }
