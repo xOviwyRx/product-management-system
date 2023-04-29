@@ -1,24 +1,30 @@
 <?php
-
 use classes\Page;
 
-$page = new Page("Product Add", "../js/addProduct/main.js");
-$title = "Product Add";
+require '../../app/initialize.php';
+$page = new Page("Product Add", "addProduct");
 
-//Consider about DOCUMENT_ROOT?
-require $_SERVER['DOCUMENT_ROOT'] . '/header.php';
+require PARTIALS . 'header.php';
 ?>
-<button class="mr-4 btn btn-outline-dark" form="product_form" id="submit" type="submit" name="save" onclick="validatefilledIn()">Save</button>
-<button class="mr-4 btn btn-outline-dark" onclick="window.location.href='/index.php'">Cancel</button>
-</div>
-</div>
+
+<!-- use vue lists -->
+<div class="min-vh-100 d-flex flex-column px-5 pt-5" id="app">
+    <div class="d-flex justify-content-between px-3">
+        <p class="h2 fw-bold"><?= $page->getTitle() ?></p>
+        <div class="buttons">
+            <button class="me-5 btn btn-outline-dark" form="product_form" id="submit" type="submit" name="save" onclick="validate()">Save</button>
+            <button class="mr-4 btn btn-outline-dark" onclick="window.location.href='../index.php'">Cancel</button>
+        </div>
+    </div>
 <hr>
 
 <form class="mt-4" method="post" action="submit.php" id="product_form">
-    <div class="alert alert-danger display-error" id="error-valid"></div>
+    <div class="alert alert-danger display-error d-none" id="error-valid"></div>
     <div class="row mb-3">
+
         <label class="col-form-label col-sm-3" for="sku">SKU</label>
         <div class="col-sm-9">
+            <!-- use vue v-model.trim -->
             <input class="form-control border-dark" name="sku" id="sku" required />
         </div>
     </div>
@@ -37,31 +43,32 @@ require $_SERVER['DOCUMENT_ROOT'] . '/header.php';
     <div class="row mb-3">
         <label class="col-form-label col-sm-4" for="typeswitcher" id="typeswitcher">Type Switcher</label>
         <div class="col-sm-5 select_box">
+            <!-- use vue v-model for select with v-for -->
             <select class="form-control border-dark" name="typeswitcher" id="productType">
                 <option value="" disabled selected>Type Switcher</option>
-                <option value="DVD" id="DVD">DVD</option>
-                <option value="Book" id="Book">Book</option>
-                <option value="Furniture" id="Furniture">Furniture</option>
+                <option value="DVD">DVD</option>
+                <option value="Book">Book</option>
+                <option value="Furniture">Furniture</option>
             </select>
         </div>
     </div>
-    <div class="row mb-3" id="noDVD">
+    <div class="row mb-3 d-none" id="dvd">
         <label class="col-form-label col-sm-3" for="size">Size (MB)</label>
         <div class="col-sm-9">
             <input placeholder="0.0" class="form-control border-dark" name="size" id="size" pattern="^[0-9]+(\.[0-9]{1})?$" required />
             <p class="mt-3">Please, provide size</p>
         </div>
     </div>
-    <div class="row mb-3" id="noBook">
-        <label class="col-form-label col-sm-3" for="weight">Weight (KG)</label>
+    <div class="row mb-3 d-none" id="book">
+        <label class="col-form-label col-sm-3 pe-0" for="weight">Weight (KG)</label>
         <div class="col-sm-9">
             <input class="form-control border-dark" pattern="^[0-9]+(\.[0-9]{1})?$" placeholder="0.0" name="weight" id="weight" />
             <p class="mt-3">Please, provide weight</p>
         </div>
     </div>
-    <div id="noFurniture">
+    <div id="furniture" class="d-none">
         <div class="row mb-3">
-            <label class="col-form-label col-sm-3" for="height">Height (CM)</label>
+            <label class="col-form-label col-sm-3 pe-0" for="height">Height (CM)</label>
             <div class="col-sm-9">
                 <input class="form-control border-dark" pattern="^[0-9]+(\.[0-9]{1})?$" placeholder="0.0" name="height" id="height" />
             </div>
@@ -82,14 +89,4 @@ require $_SERVER['DOCUMENT_ROOT'] . '/header.php';
         </div>
     </div>
 </form>
-
-</section>
-<?php include "../footer.html"; ?>
-
-use classes\Page;
-</div>
-<!-- use async or defer to load javascript in head metateg -->
-<script src="../js/addProduct/main.js"></script>
-</body>
-
-</html>
+<?php include PARTIALS . "footer.php"; ?>

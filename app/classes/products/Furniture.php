@@ -2,6 +2,7 @@
 
 namespace classes\products;
 
+use classes\Database;
 use classes\exceptions\EmptyInputException;
 use classes\exceptions\InvalidInputException;
 
@@ -9,7 +10,7 @@ class Furniture extends Product
 {
     protected $width, $height, $length;
 
-    public function setWidth($width): void
+    public function setWidth(string $width): void
     {
 
         if (empty($width)) {
@@ -24,7 +25,7 @@ class Furniture extends Product
     }
 
 
-    public function setHeight($height): void
+    public function setHeight(string $height): void
     {
 
         if (empty($height)) {
@@ -38,7 +39,7 @@ class Furniture extends Product
         $this->height = (float)$height;
     }
 
-    public function setLength($length): void
+    public function setLength(string $length): void
     {
 
         if (empty($length)) {
@@ -52,7 +53,7 @@ class Furniture extends Product
         $this->length = (float)$length;
     }
 
-    public function setSpecificAttributes($row): void
+    public function setSpecificAttributes(array $row): void
     {
         $this->setHeight($row['height']);
         $this->setWidth($row['width']);
@@ -64,13 +65,14 @@ class Furniture extends Product
         return "Dimension: {$this->height}x{$this->width}x{$this->length}";
     }
 
-    public function save()
+    public function save(): void
     {
         parent::save();
         $sql = "INSERT INTO furniture (product_id, width, height, length) VALUES (?, ?, ?, ?)";
         $pst = self::$db->prepare($sql);
         $pst->bind_param("iddd", $this->product_id, $this->width, $this->height, $this->length);
         $pst->execute();
+        Database::checkDatabaseInsertError($pst);
         $pst->close();
     }
 }

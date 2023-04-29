@@ -7,6 +7,7 @@ use mysqli;
 
 class Database
 {
+    //don't use public here
     public $connection;
 
     public function __construct()
@@ -23,6 +24,14 @@ class Database
             $msg .= $this->connection->connect_error;
             $msg .= " (" . $this->connection->connect_errno . ")";
             die($msg);
+        }
+    }
+
+    public static function checkDatabaseInsertError($pst){
+        if (!$pst->errno) {
+            $error = $pst->error;
+            $pst->close();
+            throw new DatabaseInsertException($error);
         }
     }
 

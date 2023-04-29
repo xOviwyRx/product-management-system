@@ -1,0 +1,5 @@
+<?php
+//think about autoloading only from classes directory
+spl_autoload_register(function ($classname) {
+        require_once $_SERVER['DOCUMENT_ROOT'] . '/app/' . str_replace("\\", "/", $classname) . '.php';
+});

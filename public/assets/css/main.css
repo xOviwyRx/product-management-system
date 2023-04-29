@@ -1,0 +1,50 @@
+body {
+  font-weight: bold;
+}
+
+hr {
+  border-top: 3px solid black;
+  opacity: 1;
+}
+
+.btn,
+.btn:hover,
+.btn:active,
+.btn:link,
+.btn:visited {
+  border-width: 3px !important;
+  border-color: black !important;
+  box-shadow: 3px 3px black !important;
+  font-weight: bold;
+}
+
+#product_form input,
+select {
+  border-width: 3px !important;
+}
+
+#product_form {
+  width: 500px;
+}
+
+.product-box {
+  width: 270px;
+}
+
+.select_box {
+  font-weight: bold !important;
+}
+
+#productType {
+  height: 40px;
+}
+
+#noFurniture,
+#noBook,
+#noDVD {
+  display: none;
+}
+
+p {
+  word-wrap: break-word;
+}

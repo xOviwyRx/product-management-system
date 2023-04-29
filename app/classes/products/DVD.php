@@ -2,6 +2,7 @@
 
 namespace classes\products;
 
+use classes\Database;
 use classes\exceptions\EmptyInputException;
 use classes\exceptions\InvalidInputException;
 
@@ -9,7 +10,7 @@ class DVD extends Product
 {
     protected $size;
 
-    public function setSize($size): void
+    public function setSize(string $size): void
     {
 
         if (empty($size)) {
@@ -23,9 +24,9 @@ class DVD extends Product
         $this->size = (float)$size;
     }
 
-    public function setSpecificAttributes($row = null): void
+    public function setSpecificAttributes(array $row): void
     {
-        $this->size = $row['size'];
+        $this->setSize($row['size']);
     }
 
     public function getSpecificAttributes(): string
@@ -33,13 +34,14 @@ class DVD extends Product
         return "Size: $this->size MB";
     }
 
-    public function save()
+    public function save(): void
     {
         parent::save();
         $sql = "INSERT INTO dvds (product_id, size) VALUES (?, ?)";
         $pst = self::$db->prepare($sql);
         $pst->bind_param("is", $this->product_id, $this->size);
         $pst->execute();
+        Database::checkDatabaseInsertError($pst);
         $pst->close();
     }
 }

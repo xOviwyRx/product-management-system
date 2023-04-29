@@ -4,4 +4,13 @@ $("#delete-product-btn").click(function(event) {
    }
 });
 
+  const App = {
+   data() {
+      return {
+        title: 'Product List'
+      }
+    }
+  }
+  Vue.createApp(App).mount('#app');
+
 
