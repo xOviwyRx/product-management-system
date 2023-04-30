@@ -27,8 +27,8 @@ class Database
         }
     }
 
-    public static function checkDatabaseInsertError($pst){
-        if (!$pst->errno) {
+    public static function checkDatabaseInsertError($pst): void {
+        if ($pst->errno) {
             $error = $pst->error;
             $pst->close();
             throw new DatabaseInsertException($error);
