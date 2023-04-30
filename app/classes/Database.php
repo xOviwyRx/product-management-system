@@ -31,7 +31,7 @@ class Database
         if ($pst->errno) {
             $error = $pst->error;
             $pst->close();
-            throw new DatabaseInsertException($error);
+            throw new DatabaseInsertException($error, $pst->errno);
         }
     }
 
