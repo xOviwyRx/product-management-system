@@ -25,7 +25,7 @@ class Page {
         return $root . $path;
     }
 
-    static public function redirectTo(string $path) {
+    static public function redirectTo(string $path): void {
         $url = self::urlFor($path);
         header("Location: " . $url);
         exit;
