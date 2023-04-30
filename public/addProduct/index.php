@@ -37,7 +37,7 @@ require PARTIALS . 'header.php';
     <div class="row mb-3">
         <label class="col-form-label col-sm-3" for="price">Price ($)</label>
         <div class="col-sm-9">
-            <input placeholder="0.00" name="price" class="form-control input_number border-dark" id="price" pattern="^[0-9]+(\.[0-9]{1,2})?$" required />
+            <input placeholder="0.00" name="price" class="form-control border-dark" id="price" pattern="^[0-9]+(\.[0-9]{1,2})?$" required />
         </div>
     </div>
     <div class="row mb-3">
@@ -52,21 +52,21 @@ require PARTIALS . 'header.php';
             </select>
         </div>
     </div>
-    <div class="row mb-3 d-none" id="dvd">
+    <div class="row mb-3 d-none specific_product_block" id="dvd-block">
         <label class="col-form-label col-sm-3" for="size">Size (MB)</label>
         <div class="col-sm-9">
             <input placeholder="0.0" class="form-control border-dark" name="size" id="size" pattern="^[0-9]+(\.[0-9]{1})?$" required />
             <p class="mt-3">Please, provide size</p>
         </div>
     </div>
-    <div class="row mb-3 d-none" id="book">
+    <div class="row mb-3 d-none specific_product_block" id="book-block">
         <label class="col-form-label col-sm-3 pe-0" for="weight">Weight (KG)</label>
         <div class="col-sm-9">
             <input class="form-control border-dark" pattern="^[0-9]+(\.[0-9]{1})?$" placeholder="0.0" name="weight" id="weight" />
             <p class="mt-3">Please, provide weight</p>
         </div>
     </div>
-    <div id="furniture" class="d-none">
+    <div id="furniture-block" class="d-none specific_product_block">
         <div class="row mb-3">
             <label class="col-form-label col-sm-3 pe-0" for="height">Height (CM)</label>
             <div class="col-sm-9">
