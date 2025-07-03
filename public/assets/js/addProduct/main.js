@@ -5,7 +5,7 @@ document.querySelector("#productType").addEventListener(
 
     //think about replacing modern by loop
     for (let i = 0; i < productSpecBlocks.length; i++){
-      let visibleClass = (productSpecBlocks[i].id === 'furniture_block') ? 'd-block' : 'd-flex';
+      let visibleClass = productSpecBlocks[i].id.includes("furniture-block") ? 'd-block' : 'd-flex';
 
       if (i === this.selectedIndex - 1) {
         productSpecBlocks[i].classList.replace('d-none', visibleClass);
