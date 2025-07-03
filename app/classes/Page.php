@@ -13,7 +13,7 @@ class Page {
     }
 
     public function getJsMainPath(): string {
-        return self::urlFor("assets/js/{$this->directory}main.js");
+        return "/assets/js/{$this->directory}main.js";
     }
 
     static public function urlFor(string $path): string {
