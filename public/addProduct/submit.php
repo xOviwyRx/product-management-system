@@ -22,5 +22,5 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         echo json_encode(['code' => $e->getCode(), 'msg' => $e->getMessage()]);
     };
 } else {
-    Page::redirectTo('addProduct/index.php');
+    Page::redirectTo('/addProduct/index.php');
 }

@@ -16,18 +16,8 @@ class Page {
         return "/assets/js/{$this->directory}main.js";
     }
 
-    static public function urlFor(string $path): string {
-        $public_end = strpos($_SERVER['SCRIPT_NAME'], '/public') + 7;
-        $root =  substr($_SERVER['SCRIPT_NAME'], 0, $public_end);
-        if ($path[0] != '/') {
-            $path = "/" . $path;
-        }
-        return $root . $path;
-    }
-
     static public function redirectTo(string $path): void {
-        $url = self::urlFor($path);
-        header("Location: " . $url);
+        header("Location: " . $path);
         exit;
     }
 
