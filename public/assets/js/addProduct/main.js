@@ -60,7 +60,7 @@ $(document).ready(function () {
             $("#sku").removeClass("border-dark").addClass("border-danger");
           }
         } else {
-          location.href = "/public/index.php";
+          location.href = "/";
         }
       },
     });
