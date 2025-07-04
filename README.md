@@ -7,6 +7,14 @@ A full-stack web application for managing products with mass operations and dyna
 🚧 The live demo is temporarily offline.  
 🛠 I'm currently migrating it to a new host — code and screenshots are fully available below.
 
+## 📸 Screenshots
+
+### Product List
+![Product List](screenshots/product-list.png?raw=true)
+
+### Product Form
+![Product Form](screenshots/form.png)
+
 ## 🛠️ Tech Stack
 
 - **Backend**: PHP, MySQL
